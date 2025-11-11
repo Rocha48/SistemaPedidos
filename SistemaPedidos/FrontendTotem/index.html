@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pedidos</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen active">
+            <div class="login-box">
+                <h1>Bienvenido</h1>
+
+                <p style="text-align: center; color: #555; margin-bottom: 20px;">
+                    Selecciona tu producto para ordenar
+                </p>
+                <button class="btn btn-primary" onclick="loginAsGuest()" style="margin-bottom: 30px; padding: 20px; font-size: 18px;">
+                    Ingresar sin cuenta
+                </button>
+
+                <hr style="border: none; border-top: 1px solid #eee; margin-bottom: 30px;">
+
+                <div class="input-group">
+                    <label>Usuario o Email (Para Delivery)</label>
+                    <input type="text" id="username" placeholder="Ingresa tu usuario">
+                </div>
+                <div class="input-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingresa tu contraseña">
+                </div>
+                <button class="btn btn-primary" onclick="login()">Iniciar Sesión</button>
+                <button class="btn btn-secondary" onclick="showRegister()">Crear Cuenta</button>
+            </div>
+        </div>
+
+        <!-- Menu Screen -->
+        <div id="menuScreen" class="screen">
+            <div class="header">
+                <h1>Menú del Día</h1>
+                <div>
+                    <button class="nav-btn" onclick="showOrdersReady()" style="margin-right: 10px;">📋 Pedidos Listos</button>
+                    <button class="cart-btn" onclick="showCart()">
+                        🛒 Carrito
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="nav-btn" onclick="logOut()" style="margin-right: 10px; background-color: #ff6b6b;">
+                        Salir
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="categories">
+                <button class="category-btn active" onclick="filterCategory('all')">Todos</button>
+                <button class="category-btn" onclick="filterCategory('comida')">Comidas</button>
+                <button class="category-btn" onclick="filterCategory('bebida')">Bebidas</button>
+                <button class="category-btn" onclick="filterCategory('postre')">Postres</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid"></div>
+        </div>
+
+        <!-- Cart Screen -->
+        <div id="cartScreen" class="screen">
+            <h1>Mi Carrito</h1>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total">
+                <div class="total-row">
+                    <span>TOTAL:</span>
+                    <span id="cartTotal">$0</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="showPayment()">Proceder al Pago</button>
+            <button class="btn btn-secondary" onclick="showMenu()">Seguir Comprando</button>
+        </div>
+
+        <!-- Payment Screen -->
+        <div id="paymentScreen" class="screen">
+            <h1>Método de Pago</h1>
+            <div class="payment-options">
+                <div class="payment-option" onclick="selectPayment('efectivo')">
+                    <div class="payment-icon">💵</div>
+                    <h3>Efectivo</h3>
+                </div>
+                <div class="payment-option" onclick="selectPayment('debito')">
+                    <div class="payment-icon">💳</div>
+                    <h3>Débito</h3>
+                </div>
+            </div>
+            <div class="cart-total">
+                <div class="total-row">
+                    <span>Total a Pagar:</span>
+                    <span id="paymentTotal">$0</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="showOrderType()">Continuar</button>
+            <button class="btn btn-secondary" onclick="showCart()">Volver</button>
+        </div>
+
+        <!-- Order Type Screen -->
+        <div id="orderTypeScreen" class="screen">
+            <h1>Tipo de Pedido</h1>
+            <div class="order-type-options">
+                <div class="order-type-card" onclick="selectOrderType('local')">
+                    <div class="order-type-icon">🍽️</div>
+                    <h3>Para Consumir Aquí</h3>
+                    <p>Pedido en el local</p>
+                </div>
+                <div class="order-type-card" onclick="selectOrderType('delivery')">
+                    <div class="order-type-icon">🚚</div>
+                    <h3>Delivery</h3>
+                    <p>Pedido a domicilio</p>
+                </div>
+            </div>
+
+            <div id="deliveryForm" class="delivery-form">
+                <h3 style="margin-bottom: 20px;">Datos de Entrega</h3>
+                <div class="input-group">
+                    <label>Dirección</label>
+                    <input type="text" id="deliveryAddress" placeholder="Calle, número, piso, depto">
+                </div>
+                <div class="input-group">
+                    <label>Teléfono</label>
+                    <input type="tel" id="deliveryPhone" placeholder="Número de contacto">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="confirmOrder()">Confirmar Pedido</button>
+            <button class="btn btn-secondary" onclick="showPayment()">Volver</button>
+        </div>
+
+        <!-- Confirmation Screen -->
+        <div id="confirmationScreen" class="screen">
+            <div class="confirmation-box">
+                <div class="check-icon">✓</div>
+                <h1>¡Pedido Confirmado!</h1>
+                <p>Tu número de orden es:</p>
+                <div class="order-number" id="orderNumber">000</div>
+                <p style="margin: 20px 0;" id="confirmationMessage">Por favor espera tu pedido</p>
+                <button class="btn btn-primary" onclick="newOrder()">Hacer Nuevo Pedido</button>
+                <button class="btn btn-secondary" onclick="showOrdersReady()">Ver Pedidos Listos</button>
+            </div>
+        </div>
+
+        <!-- Orders Ready Screen -->
+        <div id="ordersReadyScreen" class="screen">
+            <div class="orders-nav">
+                <h1>Pedidos Listos</h1>
+                <button class="nav-btn" onclick="showMenu()">← Volver al Menú</button>
+            </div>
+            <div class="orders-grid" id="ordersGrid"></div>
+            <p id="noOrders" style="text-align:center; color:#999; display:none;">No hay pedidos listos en este momento</p>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
