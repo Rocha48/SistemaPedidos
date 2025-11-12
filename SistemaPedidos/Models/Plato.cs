@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace sistemapedidos.Models
 {
     public class Plato
     {
-        public int IdPlato { get; set; }
+        [Key] public int IdPlato { get; set; }
         public string Nombre { get; set; }
         public string? Descripcion { get; set; }
         public decimal Precio { get; set; }

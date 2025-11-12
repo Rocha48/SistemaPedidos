@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace sistemapedidos.Models
 {
     public class Mesa
     {
-        public int IdMesa { get; set; }
+        [Key] public int IdMesa { get; set; }
+
         public int Numero { get; set; }
         public string Estado { get; set; }
         public int? Capacidad { get; set; }

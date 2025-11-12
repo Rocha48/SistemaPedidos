@@ -1,8 +1,11 @@
-﻿namespace sistemapedidos.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace sistemapedidos.Models
 {
     public class DetallePedido
     {
-        public int IdDetalle { get; set; }
+
+        [Key] public int IdDetalle { get; set; }
         public int IdPedido { get; set; }
         public int IdPlato { get; set; }
         public int Cantidad { get; set; }

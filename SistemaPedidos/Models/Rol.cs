@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace sistemapedidos.Models
 {
     public class Rol
     {
-        public int IdRol { get; set; }
+        [Key] public int IdRol { get; set; }
         public string NombreRol { get; set; }
         public string? Descripcion { get; set; }
 
