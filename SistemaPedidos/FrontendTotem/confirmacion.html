@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Confirmado</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body class="pantalla-confirmacion">
+
+    <div class="confirmacion-contenedor">
+
+        <img src="img/check.png" class="confirmacion-icon" alt="OK">
+
+        <h1 class="confirmacion-titulo">¡Pedido confirmado!</h1>
+
+        <p class="confirmacion-texto">
+            Tu pedido está en camino.<br>
+            Método de pago: <strong id="pago-metodo"></strong><br>
+            Código del pedido: <strong id="codigo-pedido"></strong>
+        </p>
+
+        <button onclick="volverInicio()" class="btn-volver-inicio">
+            Volver al inicio
+        </button>
+
+    </div>
+
+
+    <script src="js/script.js"></script>
+</body>
+</html>

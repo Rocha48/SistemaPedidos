@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body class="menu-body">
+
+    <!-- HEADER SUPERIOR -->
+    <header class="menu-header">
+        <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+        <h1 class="logo-menu">🍔 Menú</h1>
+
+        <button class="btn-carrito" onclick="abrirCarrito()">🛒</button>
+    </header>
+
+
+    <!-- MENÚ LATERAL DE CATEGORÍAS -->
+    <aside id="sidebar" class="sidebar">
+        <h2 class="sidebar-title">Categorías</h2>
+        <div id="lista-categorias" class="sidebar-categorias"></div>
+    </aside>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="menu-content">
+
+        <!-- BANNER PRINCIPAL -->
+        <div class="banner-principal">
+            <img src="img/banner.jpg" alt="Promoción del día" class="banner-img">
+        </div>
+
+        <!-- SUGERENCIAS -->
+        <section>
+            <h2 class="seccion-titulo">Sugerencias de hoy</h2>
+            <div id="sugerencias" class="productos-grid"></div>
+        </section>
+
+        <!-- TODOS LOS PRODUCTOS -->
+        <section>
+            <h2 class="seccion-titulo">Todos los productos</h2>
+            <div id="lista-productos" class="productos-grid"></div>
+        </section>
+
+    </main>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("sidebar-open");
+        }
+
+        // INICIALIZAR MENU CON TUS FUNCIONES
+        cargarCategorias();
+        cargarSugerencias();
+        cargarProductos();
+    </script>
+
+    <script>
+        document.addEventListener("click", function (e) {
+            const sidebar = document.getElementById("sidebar");
+            const button = document.querySelector(".hamburger-btn");
+
+            // Si está abierto y el click NO fue dentro del sidebar ni en el botón
+            if (sidebar.classList.contains("sidebar-open") &&
+                !sidebar.contains(e.target) &&
+                !button.contains(e.target)) {
+
+                sidebar.classList.remove("sidebar-open");
+            }
+        });
+    </script>
+
+
+
+</body>
+</html>

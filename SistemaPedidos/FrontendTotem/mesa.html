@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesa</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="pedido-container">
+
+    <div class="pedido-box">
+        <h1 class="pedido-title">¿En qué mesa estás?</h1>
+
+        <input type="number" id="mesa" class="input-mesa" placeholder="Número de mesa">
+
+        <button class="pedido-btn" onclick="guardarMesa()">
+            Continuar
+        </button>
+    </div>
+
+    <script>
+        function guardarMesa() {
+            const mesa = document.getElementById("mesa").value;
+
+            if (!mesa) {
+                alert("Ingresá un número de mesa");
+                return;
+            }
+
+            localStorage.setItem("mesa", mesa);
+            window.location.href = "menu.html";
+        }
+    </script>
+
+</body>
+</html>

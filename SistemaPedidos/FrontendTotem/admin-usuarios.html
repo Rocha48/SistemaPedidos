@@ -1,0 +1,83 @@
+﻿<script>
+    if (!localStorage.getItem("token")) {
+        window.location.href = "admin-login.html";
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body class="admin-usuarios-body">
+
+    <div class="usuarios-wrapper">
+
+        <header class="usuarios-header">
+            <h1>👥 Gestión de Usuarios</h1>
+            <a href="admin-panel.html" class="btn-volver">⬅ Volver</a>
+        </header>
+
+        <main class="usuarios-contenedor">
+
+            <div class="usuarios-acciones">
+                <button class="btn-agregar" onclick="abrirModalUsuario()">➕ Nuevo Usuario</button>
+            </div>
+
+            <div class="tabla-wrapper">
+                <table class="tabla-usuarios">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-usuarios-body"></tbody>
+                </table>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Modal (Agregar/Editar Usuario) -->
+    <div class="modal" id="modal-usuario">
+        <div class="modal-content">
+            <h2 id="modal-titulo">Nuevo Usuario</h2>
+
+            <label>Usuario</label>
+            <input type="text" id="usuario-nombre">
+
+            <label>Email</label>
+            <input type="email" id="usuario-email">
+
+            <label>Password</label>
+            <input type="password" id="usuario-pass">
+
+            <label>Rol</label>
+            <select id="usuario-rol">
+                <option value="Administrador">Administrador</option>
+                <option value="Cajero">Cajero</option>
+                <option value="Mozo">Mozo</option>
+                <option value="Cocina">Cocina</option>
+            </select>
+
+            <div class="modal-botones">
+                <button onclick="guardarUsuario()" class="btn-guardar">Guardar</button>
+                <button onclick="cerrarModal()" class="btn-cerrar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>

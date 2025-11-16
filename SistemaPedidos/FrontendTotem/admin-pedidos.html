@@ -1,0 +1,96 @@
+﻿<script>
+    if (!localStorage.getItem("token")) {
+        window.location.href = "admin-login.html";
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos en Curso</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body class="admin-panel-body">
+
+    <!-- SIDEBAR FIJO -->
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-user">
+            <div class="sidebar-user-icon">👤</div>
+            <p id="sidebar-username">Administrador</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="admin-panel.html">🏠 Inicio</a>
+            <a href="admin-pedidos.html">📦 Pedidos</a>
+            <a href="admin-platos.html">🍔 Platos</a>
+            <a href="admin-categorias.html">📂 Categorías</a>
+            <a href="admin-usuarios.html">👤 Usuarios</a>
+            <a href="admin-reportes.html">📊 Reportes</a>
+        </nav>
+
+        <button class="sidebar-logout" onclick="cerrarSesion()">⛔ Cerrar sesión</button>
+    </aside>
+
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="admin-main">
+
+        <header class="admin-header">
+            <button class="menu-mobile-btn" onclick="toggleMenuMobile()">☰</button>
+            <h1>📦 Pedidos en Curso</h1>
+            <a href="admin-panel.html" class="btn-volver">⬅ Volver</a>
+        </header>
+
+        <div id="lista-pedidos" class="admin-grid"></div>
+
+    </main>
+
+    <script src="js/script.js"></script>
+
+
+
+    <!-- MODAL LOGOUT -->
+    <div id="modalLogout" class="modal-logout oculto">
+        <div class="modal-content-logout">
+            <h3>¿Cerrar sesión?</h3>
+            <p>¿Estás seguro que deseas cerrar tu sesión?</p>
+
+            <div class="modal-btns">
+                <button id="logout-confirm" class="btn-confirmar">Sí, cerrar</button>
+                <button id="logout-cancel" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SIDEBAR MÓVIL -->
+    <div id="sidebarMobile" class="sidebar-mobile oculto">
+        <div class="sidebar-mobile-content">
+
+            <div class="sidebar-user">
+                <div class="sidebar-user-icon">👤</div>
+                <p>Administrador</p>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="admin-panel.html">🏠 Inicio</a>
+                <a href="admin-pedidos.html">📦 Pedidos</a>
+                <a href="admin-platos.html">🍔 Platos</a>
+                <a href="admin-categorias.html">📂 Categorías</a>
+                <a href="admin-usuarios.html">👤 Usuarios</a>
+                <a href="admin-reportes.html">📊 Reportes</a>
+            </nav>
+
+            <button class="sidebar-logout" onclick="cerrarSesion()">⛔ Cerrar sesión</button>
+
+        </div>
+    </div>
+
+
+</body>
+</html>
