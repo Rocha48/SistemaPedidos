@@ -2,32 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedido Confirmado</title>
-    <link rel="stylesheet" href="css/estilos.css">
+     <link rel="stylesheet" href="../css/estilos.css">
 </head>
-
 <body class="pantalla-confirmacion">
 
-    <div class="confirmacion-contenedor">
+    <h1>¡Pedido confirmado!</h1>
+    <p>Tu pedido se ha registrado exitosamente</p>
 
-        <img src="img/check.png" class="confirmacion-icon" alt="OK">
+    <h2>CÓDIGO DE PEDIDO:</h2>
+    <p id="codigo-pedido">-</p>
 
-        <h1 class="confirmacion-titulo">¡Pedido confirmado!</h1>
+    <h3>Detalles del pedido</h3>
 
-        <p class="confirmacion-texto">
-            Tu pedido está en camino.<br>
-            Método de pago: <strong id="pago-metodo"></strong><br>
-            Código del pedido: <strong id="codigo-pedido"></strong>
-        </p>
+    <p><strong>Cliente:</strong> <span id="nombre-cliente-confirmacion">-</span></p>
+    <p><strong>Método de pago:</strong> <span id="pago-metodo">-</span></p>
+    <p><strong>Tipo de pedido:</strong> <span id="tipo-pedido-confirmacion">-</span></p>
+    <p><strong>Mesa:</strong> <span id="mesa-confirmacion">-</span></p>
 
-        <button onclick="volverInicio()" class="btn-volver-inicio">
-            Volver al inicio
-        </button>
 
+
+    <!-- OBSERVACIONES -->
+    <div id="observaciones-box" style="display:none;">
+        <p><strong>Observaciones:</strong></p>
+        <p id="observaciones-confirmacion"></p>
     </div>
 
+    <p>Por favor, dirigite al mostrador y mostrá tu código cuando tu pedido esté listo.</p>
 
-    <script src="js/script.js"></script>
+    <button onclick="volverInicio()">Volver al inicio</button>
+
+    <!-- Archivo JS -->
+    <script src="../js/script.js"></script>
+
 </body>
 </html>

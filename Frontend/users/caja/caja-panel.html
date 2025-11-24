@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cajero - Panel</title>
+    <link rel="stylesheet" href="../../css/estilos.css">
+</head>
+
+<body class="cajero-body">
+
+    <!-- HEADER -->
+    <header class="cajero-header">
+        <div class="header-left">
+            <h1>Caja - Panel de Control</h1>
+            <p class="header-subtitle">Gestión de pagos y pedidos</p>
+        </div>
+        <div class="header-right">
+            <button class="btn-historial" onclick="window.location.href='caja-historial.html'">
+                Ver Historial
+            </button>
+            <button class="btn-logout" onclick="cerrarSesion()">
+                Cerrar sesión
+            </button>
+        </div>
+    </header>
+
+    <!-- RESUMEN DE CAJA -->
+    <div class="caja-resumen">
+        <div class="resumen-card">
+            <div class="resumen-titulo">Pedidos Pendientes</div>
+            <div class="resumen-valor" id="total-pendientes">0</div>
+        </div>
+        <div class="resumen-card">
+            <div class="resumen-titulo">Total del Día</div>
+            <div class="resumen-valor" id="total-dia">$0</div>
+        </div>
+        <div class="resumen-card">
+            <div class="resumen-titulo">Pagos Procesados</div>
+            <div class="resumen-valor" id="total-procesados">0</div>
+        </div>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="cajero-filtros">
+        <button class="filtro-btn activo" data-filtro="pendiente">
+            Pendientes de Pago
+        </button>
+        <button class="filtro-btn" data-filtro="todos">
+            Todos los Pedidos
+        </button>
+    </div>
+
+    <!-- CONTENEDOR DE PEDIDOS -->
+    <main class="cajero-contenedor">
+        <div id="pedidos-lista" class="pedidos-lista-caja">
+            <div class="mensaje-cargando">Cargando pedidos...</div>
+        </div>
+    </main>
+
+    <!-- MODAL DE REGISTRO DE PAGO -->
+    <div id="modal-pago" class="modal-overlay oculto">
+        <div class="modal-box-caja">
+            <h3>Registrar Pago</h3>
+            
+            <div class="modal-info-pedido">
+                <div class="info-fila">
+                    <span class="info-etiqueta">Pedido:</span>
+                    <span class="info-dato" id="modal-pedido-num"></span>
+                </div>
+                <div class="info-fila">
+                    <span class="info-etiqueta">Cliente:</span>
+                    <span class="info-dato" id="modal-cliente-nom"></span>
+                </div>
+                <div class="info-fila">
+                    <span class="info-etiqueta">Total:</span>
+                    <span class="info-dato-monto" id="modal-monto-total"></span>
+                </div>
+            </div>
+
+            <div class="form-pago">
+                <label>Método de Pago:</label>
+                <select id="metodo-pago" class="input-metodo">
+                    <option value="">Seleccionar...</option>
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Tarjeta">Tarjeta</option>
+                    <option value="QR">Pago QR</option>
+                </select>
+
+                <div id="campo-transaccion" class="campo-transaccion oculto">
+                    <label>Número de Transacción:</label>
+                    <input type="text" id="numero-transaccion" placeholder="Ej: TXN-123456">
+                </div>
+            </div>
+
+            <div class="modal-botones">
+                <button class="btn-cancelar" onclick="cerrarModalPago()">Cancelar</button>
+                <button class="btn-confirmar-pago" onclick="confirmarPago()">Confirmar Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/script.js"></script>
+
+</body>
+</html>

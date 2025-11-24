@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cajero - Historial</title>
+    <link rel="stylesheet" href="../../css/estilos.css">
+</head>
+
+<body class="cajero-body">
+
+    <!-- HEADER -->
+    <header class="cajero-header">
+        <div class="header-left">
+            <h1>Historial de Pagos</h1>
+            <p class="header-subtitle">Registro de transacciones del día</p>
+        </div>
+        <div class="header-right">
+            <button class="btn-volver-caja" onclick="window.location.href='caja-panel.html'">
+                Volver a Caja
+            </button>
+            <button class="btn-logout" onclick="cerrarSesion()">
+                Cerrar sesión
+            </button>
+        </div>
+    </header>
+
+    <!-- FILTROS POR MÉTODO -->
+    <div class="cajero-filtros">
+        <button class="filtro-btn activo" data-metodo="todos">
+            Todos
+        </button>
+        <button class="filtro-btn" data-metodo="Efectivo">
+            Efectivo
+        </button>
+        <button class="filtro-btn" data-metodo="Tarjeta">
+            Tarjeta
+        </button>
+        <button class="filtro-btn" data-metodo="QR">
+            Pago QR
+        </button>
+    </div>
+
+    <!-- TABLA DE HISTORIAL -->
+    <main class="cajero-contenedor">
+        <div class="tabla-wrapper">
+            <table class="tabla-historial">
+                <thead>
+                    <tr>
+                        <th>ID Pago</th>
+                        <th>Fecha y Hora</th>
+                        <th>Método</th>
+                        <th>Monto</th>
+                        <th>N° Transacción</th>
+                    </tr>
+                </thead>
+                <tbody id="historial-pagos">
+                    <tr>
+                        <td colspan="5" class="mensaje-cargando">Cargando historial...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="resumen-historial">
+            <div class="resumen-total">
+                <span>Total Recaudado:</span>
+                <strong id="total-recaudado">$0</strong>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/script.js"></script>
+
+</body>
+</html>

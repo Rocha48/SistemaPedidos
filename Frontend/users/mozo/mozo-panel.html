@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mozo - Pedidos</title>
+    <link rel="stylesheet" href="../../css/estilos.css">
+</head>
+
+<body class="mozo-body">
+
+    <!-- HEADER -->
+    <header class="mozo-header">
+        <div class="header-left">
+            <h1>Panel de Mozo</h1>
+            <p class="header-subtitle">Pedidos listos para entregar</p>
+        </div>
+        <div class="header-right">
+            <button class="btn-mesas" onclick="window.location.href='mozo-mesas.html'">
+                Ver Mesas
+            </button>
+            <button class="btn-logout" onclick="cerrarSesion()">
+                Cerrar sesión
+            </button>
+        </div>
+    </header>
+
+    <!-- FILTROS -->
+    <div class="mozo-filtros">
+        <button class="filtro-btn activo" data-estado="Listo">
+            Listos para entregar
+        </button>
+        <button class="filtro-btn" data-estado="Todos">
+            Todos los pedidos
+        </button>
+        <button class="filtro-btn" data-estado="Entregado">
+            Entregados hoy
+        </button>
+    </div>
+
+    <!-- CONTENEDOR DE PEDIDOS -->
+    <main class="mozo-contenedor">
+        <div id="pedidos-lista" class="pedidos-grid">
+            <!-- Los pedidos se cargan dinámicamente aquí -->
+            <div class="mensaje-cargando">Cargando pedidos...</div>
+        </div>
+    </main>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div id="modal-confirmar" class="modal-overlay oculto">
+        <div class="modal-box">
+            <h3>Confirmar entrega</h3>
+            <p>¿Confirmar que el pedido fue entregado?</p>
+            
+            <div class="modal-detalle">
+                <p><strong>Pedido:</strong> <span id="modal-pedido-id"></span></p>
+                <p><strong>Cliente:</strong> <span id="modal-cliente"></span></p>
+                <p><strong>Mesa:</strong> <span id="modal-mesa"></span></p>
+            </div>
+
+            <div class="modal-botones">
+                <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn-confirmar" onclick="confirmarEntrega()">Confirmar entrega</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/mozo.js"></script>
+
+</body>
+</html>

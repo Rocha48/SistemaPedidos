@@ -1,6 +1,6 @@
 ﻿<script>
     if (!localStorage.getItem("token")) {
-        window.location.href = "admin-login.html";
+        window.location.href = "../../admin-login.html";
     }
 </script>
 
@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../../css/estilos.css">
 </head>
 
 <body class="admin-panel-body">
@@ -24,11 +24,11 @@
         </div>
 
         <nav class="sidebar-nav">
-            <a href="admin-pedidos.html">📦 Pedidos</a>
+            <a href="admin-mesas.html">📦 Mesas</a>
             <a href="admin-platos.html">🍔 Platos</a>
             <a href="admin-categorias.html">📂 Categorías</a>
             <a href="admin-usuarios.html">👤 Usuarios</a> <!-- NUEVO -->
-            <a href="admin-reportes.html">📊 Reportes</a>
+            
         </nav>
 
         <button class="sidebar-logout" onclick="cerrarSesion()">⛔ Cerrar sesión</button>
@@ -43,35 +43,31 @@
 
         <div class="admin-grid">
 
-            <div class="admin-card" onclick="location.href='admin-pedidos.html'">
-                <img src="img/admin-pedidos.png" class="admin-card-img">
-                <h2>Pedidos en curso</h2>
+            <div class="admin-card" onclick="location.href='admin-mesas.html'">
+                <img src="../../img/admin-mesas.png" class="admin-card-img">
+                <h2>Gestión de Mesas</h2>
             </div>
 
             <div class="admin-card" onclick="location.href='admin-platos.html'">
-                <img src="img/admin-platos.png" class="admin-card-img">
+                <img src="../../img/admin-platos.png" class="admin-card-img">
                 <h2>Gestión de Platos</h2>
             </div>
 
             <div class="admin-card" onclick="location.href='admin-categorias.html'">
-                <img src="img/admin-categorias.png" class="admin-card-img">
+                <img src="../../img/admin-categorias.png" class="admin-card-img">
                 <h2>Gestión de Categorías</h2>
             </div>
 
             <div class="admin-card" onclick="location.href='admin-usuarios.html'">
-                <img src="img/admin-usuarios.png" class="admin-card-img">
+                <img src="../../img/admin-usuarios.png" class="admin-card-img">
                 <h2>Gestión de Usuarios</h2>
             </div>
 
-            <div class="admin-card" onclick="location.href='admin-reportes.html'">
-                <img src="img/admin-reportes.png" class="admin-card-img">
-                <h2>Reportes</h2>
-            </div>
 
         </div>
     </main>
 
-    <script src="js/script.js"></script>
+    <script src="../../js/script.js"></script>
 
 
     <!-- MODAL DE CERRAR SESIÓN -->
@@ -99,11 +95,10 @@
             </div>
 
             <nav class="sidebar-nav">
-                <a href="admin-pedidos.html">📦 Pedidos</a>
+                <a href="admin-mesas.html">📦 Mesas</a>
                 <a href="admin-platos.html">🍔 Platos</a>
                 <a href="admin-categorias.html">📂 Categorías</a>
                 <a href="admin-usuarios.html">👤 Usuarios</a>
-                <a href="admin-reportes.html">📊 Reportes</a>
             </nav>
 
             <button class="sidebar-logout" onclick="cerrarSesion()">⛔ Cerrar sesión</button>

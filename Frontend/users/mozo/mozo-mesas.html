@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mozo - Mesas</title>
+    <link rel="stylesheet" href="../../css/estilos.css">
+</head>
+
+<body class="mozo-body">
+
+    <!-- HEADER -->
+    <header class="mozo-header">
+        <div class="header-left">
+            <h1>Estado de Mesas</h1>
+            <p class="header-subtitle">Gestión de mesas del restaurante</p>
+        </div>
+        <div class="header-right">
+            <button class="btn-secondary" onclick="window.location.href='mozo-panel.html'">
+                Volver a Pedidos
+            </button>
+            <button class="btn-logout" onclick="cerrarSesion()">
+                Cerrar sesión
+            </button>
+        </div>
+    </header>
+
+    <!-- FILTROS -->
+    <div class="mozo-filtros">
+        <button class="filtro-btn activo" data-filtro="Todas">
+            Todas las mesas
+        </button>
+        <button class="filtro-btn" data-filtro="Libre">
+            Libres
+        </button>
+        <button class="filtro-btn" data-filtro="Ocupada">
+            Ocupadas
+        </button>
+    </div>
+
+    <!-- CONTENEDOR DE MESAS -->
+    <main class="mozo-contenedor">
+        <div id="mesas-lista" class="mesas-grid">
+            <!-- Las mesas se cargan dinámicamente aquí -->
+            <div class="mensaje-cargando">Cargando mesas...</div>
+        </div>
+    </main>
+
+    <script src="../../js/mozo.js"></script>
+
+</body>
+</html>

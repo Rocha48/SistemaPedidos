@@ -1,6 +1,6 @@
 ﻿<script>
     if (!localStorage.getItem("token")) {
-        window.location.href = "admin-login.html";
+        window.location.href = "../../admin-login.html";
     }
 </script>
 
@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Platos</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../../css/estilos.css">
 </head>
 
 <body class="admin-panel-body">
@@ -25,11 +25,11 @@
 
         <nav class="sidebar-nav">
             <a href="admin-panel.html">🏠 Inicio</a>
-            <a href="admin-pedidos.html">📦 Pedidos</a>
-            <a href="admin-platos.html">🍔 Platos</a>
+            <a href="admin-mesas.html">📦 Mesas</a>
+            
             <a href="admin-categorias.html">📂 Categorías</a>
             <a href="admin-usuarios.html">👤 Usuarios</a>
-            <a href="admin-reportes.html">📊 Reportes</a>
+            
         </nav>
 
         <button class="sidebar-logout" onclick="cerrarSesion()">⛔ Cerrar sesión</button>
@@ -52,7 +52,7 @@
                 <h2 id="titulo-form-plato">Crear Plato</h2>
 
                 <input type="text" id="plato-nombre" placeholder="Nombre del plato">
-                <input type="number" id="plato-precio" placeholder="Precio en pesos">
+                <input type="number" id="plato-precio" placeholder="Precio en pesos" min="1">
 
                 <select id="plato-categoria"></select>
 
@@ -92,7 +92,7 @@
         </div>
     </main>
 
-    <script src="js/script.js"></script>
+    <script src="../../js/script.js"></script>
 
 
     <!-- MODAL DE CERRAR SESIÓN -->
@@ -121,11 +121,11 @@
 
             <nav class="sidebar-nav">
                 <a href="admin-panel.html">🏠 Inicio</a>
-                <a href="admin-pedidos.html">📦 Pedidos</a>
-                <a href="admin-platos.html">🍔 Platos</a>
+                <a href="admin-mesas.html">📦 Mesas</a>
+                
                 <a href="admin-categorias.html">📂 Categorías</a>
                 <a href="admin-usuarios.html">👤 Usuarios</a>
-                <a href="admin-reportes.html">📊 Reportes</a>
+                
             </nav>
 
             <button class="sidebar-logout" onclick="cerrarSesion()">⛔ Cerrar sesión</button>

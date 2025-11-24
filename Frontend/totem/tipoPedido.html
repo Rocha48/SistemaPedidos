@@ -4,27 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tipo de Pedido</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body class="pedido-container">
 
+
+    <div class="pedido-lateral-imagen"> <img src="../img/hamburguesa.png" alt="Hamburguesa deliciosa" class="imagen-principal">
+    </div>
     <div class="pedido-box">
         <h1 class="pedido-title">¿Qué deseas hacer?</h1>
 
         <div class="pedido-opciones">
 
             <button class="pedido-btn" onclick="seleccionarTipo('local')">
-                🍽️ Consumir en el local
+                 Consumir en el local
+                
             </button>
 
             <button class="pedido-btn pedido-btn-secondary" onclick="seleccionarTipo('llevar')">
-                📦 Para llevar
+                 Para llevar
             </button>
 
         </div>
 
     </div>
 
-    <script src="js/tipoPedido.js"></script>
+    <script src="../js/tipoPedido.js"></script>
 </body>
 </html>

@@ -3,33 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesa</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <title>Seleccionar Mesa</title>
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
-<body class="pedido-container">
+
+<body class="pedido-container screen-mesas">
 
     <div class="pedido-box">
-        <h1 class="pedido-title">¿En qué mesa estás?</h1>
+        <h1 class="pedido-title">Seleccioná tu mesa</h1>
 
-        <input type="number" id="mesa" class="input-mesa" placeholder="Número de mesa">
+        <div id="mesas-grid" class="mesas-grid"></div>
 
-        <button class="pedido-btn" onclick="guardarMesa()">
+        <button class="pedido-btn" onclick="confirmarMesa()" id="btnContinuar" disabled>
             Continuar
         </button>
     </div>
 
     <script>
-        function guardarMesa() {
-            const mesa = document.getElementById("mesa").value;
+        // MOCK: listado de mesas para frontend (1 a 12)
+        // Más adelante tu compañero solo reemplaza esta lista por un fetch().
+        const mesasMock = [
+            { id: 1, numero: 1, estado: "libre" },
+            { id: 2, numero: 2, estado: "ocupada" },
+            { id: 3, numero: 3, estado: "libre" },
+            { id: 4, numero: 4, estado: "ocupada" },
+            { id: 5, numero: 5, estado: "libre" },
+            { id: 6, numero: 6, estado: "libre" },
+            { id: 7, numero: 7, estado: "ocupada" },
+            { id: 8, numero: 8, estado: "libre" },
+            { id: 9, numero: 9, estado: "libre" },
+            { id: 10, numero: 10, estado: "ocupada" },
+            { id: 11, numero: 11, estado: "libre" },
+            { id: 12, numero: 12, estado: "libre" }
+        ];
 
-            if (!mesa) {
-                alert("Ingresá un número de mesa");
-                return;
-            }
+        let mesaSeleccionada = null;
 
-            localStorage.setItem("mesa", mesa);
-            window.location.href = "menu.html";
+        function cargarMesas() {
+            const contenedor = document.getElementById("mesas-grid");
+
+            mesasMock.forEach(m => {
+                const btn = document.createElement("button");
+                btn.classList.add("mesa-btn");
+
+                if (m.estado === "ocupada") {
+                    btn.classList.add("mesa-ocupada");
+                    btn.textContent = `${m.numero} (Ocupada)`;
+                    btn.disabled = true;
+                } else {
+                    btn.classList.add("mesa-libre");
+                    btn.textContent = `Mesa ${m.numero}`;
+                    btn.onclick = () => seleccionarMesa(m.numero, btn);
+                }
+
+                contenedor.appendChild(btn);
+            });
         }
+
+        function seleccionarMesa(numMesa, boton) {
+            mesaSeleccionada = numMesa;
+
+            // Desmarcar todas
+            document.querySelectorAll(".mesa-btn").forEach(b => b.classList.remove("mesa-seleccionada"));
+
+            // Marcar la seleccionada
+            boton.classList.add("mesa-seleccionada");
+
+            // Activar botón continuar
+            document.getElementById("btnContinuar").disabled = false;
+        }
+
+        function confirmarMesa() {
+            if (!mesaSeleccionada) return;
+
+            // Guardar tipo pedido y mesa
+            localStorage.setItem("tipoPedido", "local");
+            localStorage.setItem("mesaSeleccionada", mesaSeleccionada);
+
+            // Ir al menú
+            window.location.href = "../totem/menu.html";
+        }
+
+        // Iniciar
+        cargarMesas();
     </script>
 
 </body>
