@@ -1,5 +1,5 @@
 ﻿// =========================================
-//   LOGIN DE USUARIOS DEL RESTAURANTE
+//   LOGIN CON REDIRECCIÓN POR ROL
 // =========================================
 
 async function loginAdmin() {
@@ -16,121 +16,101 @@ async function loginAdmin() {
         return;
     }
 
-    /* ---------------------------
-       DATOS SIMULADOS POR AHORA
-       Cambiar cuando exista API
-    ---------------------------- */
-    
-    // Base de datos simulada de usuarios
-    const usuariosSimulados = {
-        admin: {
-            password: "1234",
-            rol: "Administrador",
-            nombre: "Administrador del Sistema",
-            redireccion: "users/admin/admin-panel.html"
-        },
-        cocinero: {
-            password: "0123",
-            rol: "Cocina",
-            nombre: "Personal de Cocina",
-            redireccion: "users/cocinero/cocinero-panel.html"
-        },
-        mozo: {
-            password: "mozo123",
-            rol: "Mozo",
-            nombre: "Mozo del Restaurante",
-            redireccion: "users/mozo/mozo-panel.html"
-        },
-        cajero: {
-            password: "cajero123",
-            rol: "Cajero",
-            nombre: "Cajero del Restaurante",
-            redireccion: "users/cajero/cajero-panel.html"
-        }
-    };
-
-    // Buscar usuario en la base simulada
-    const usuarioEncontrado = usuariosSimulados[usuario.toLowerCase()];
-
-    if (!usuarioEncontrado) {
-        error.innerText = "❌ Usuario no encontrado.";
-        return;
-    }
-
-    // Validar contraseña
-    if (usuarioEncontrado.password !== password) {
-        error.innerText = "❌ Contraseña incorrecta.";
-        return;
-    }
-
-    // Login exitoso - Guardar datos en localStorage
-    localStorage.setItem("token", "token-simulacion-" + Date.now());
-    localStorage.setItem("usuario", usuario);
-    localStorage.setItem("rol", usuarioEncontrado.rol);
-    localStorage.setItem("nombreCompleto", usuarioEncontrado.nombre);
-
-    console.log("✅ Login exitoso:", {
-        usuario: usuario,
-        rol: usuarioEncontrado.rol,
-        redireccion: usuarioEncontrado.redireccion
-    });
-
-    // Redireccionar según el rol
-    window.location.href = usuarioEncontrado.redireccion;
-
-    /* ================================================
-       CÓDIGO PARA CUANDO ESTÉ EL BACKEND CONECTADO
-    ================================================ */
-    /*
     try {
-        const respuesta = await fetch("http://localhost:5164/api/Auth/login", {
+        // Llamada al backend
+        const respuesta = await fetch("http://localhost:5151/api/Auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ 
-                usuario: usuario, 
-                password: password 
+                username: usuario,    
+                password: password    
             })
         });
 
+        // Si falla
         if (!respuesta.ok) {
             const errorData = await respuesta.json();
             error.innerText = errorData.message || "Usuario o contraseña incorrectos.";
             return;
         }
 
+        // Respuesta OK (200)
         const data = await respuesta.json();
 
-        // Guardar token JWT real y datos del usuario
+        // Guardamos el token JWT
         localStorage.setItem("token", data.token);
-        localStorage.setItem("usuario", data.usuario);
-        localStorage.setItem("rol", data.rol);
-        localStorage.setItem("nombreCompleto", data.nombreCompleto);
 
-        // Redireccionar según el rol del backend
-        switch(data.rol) {
-            case "Administrador":
-                window.location.href = "users/admin/admin-panel.html";
-                break;
-            case "Cocina":
-                window.location.href = "users/cocinero/cocinero-panel.html";
-                break;
-            case "Mozo":
-                window.location.href = "users/mozo/mozo-panel.html";
-                break;
-            case "Cajero":
-                window.location.href = "users/cajero/cajero-panel.html";
-                break;
-            default:
-                error.innerText = "Rol de usuario no válido.";
-        }
+        console.log("Login exitoso, token recibido:", data.token);
+
+        // Decodificar el token para obtener el rol
+        const rol = obtenerRolDelToken(data.token);
+        console.log("Rol del usuario:", rol);
+
+        // Guardar el rol también (opcional pero útil)
+        localStorage.setItem("userRole", rol);
+
+        // Redirigir según el rol
+        redirigirSegunRol(rol);
 
     } catch (e) {
         console.error("Error en login:", e);
         error.innerText = "Error al conectar con el servidor.";
     }
-    */
+}
+
+// =========================================
+//   DECODIFICAR TOKEN JWT
+// =========================================
+function obtenerRolDelToken(token) {
+    try {
+        // El token JWT tiene 3 partes separadas por punto: header.payload.signature
+        const payload = token.split('.')[1];
+        
+        // Decodificar base64
+        const decodificado = JSON.parse(atob(payload));
+        
+        // El rol está en la claim "role"
+        return decodificado.role || decodificado["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || "Usuario";
+    } catch (e) {
+        console.error("Error al decodificar token:", e);
+        return "Usuario";
+    }
+}
+
+// =========================================
+//   REDIRIGIR SEGÚN ROL
+// =========================================
+function redirigirSegunRol(rol) {
+    console.log("Redirigiendo a:", rol); // Debug
+    
+    switch(rol.toLowerCase()) {
+        case "admin":
+        case "administrador":
+            window.location.href = "users/admin/admin-panel.html";
+            break;
+        
+        case "mozo":
+        case "mesero":
+            window.location.href = "users/mozo/mozo-panel.html";
+            break;
+        
+        case "cocinero":
+        case "cocina":
+            window.location.href = "users/cocinero/cocinero-panel.html";
+            break;
+        
+        case "caja":
+        case "cajero":
+            window.location.href = "users/caja/caja-panel.html";
+            break;
+        
+        default:
+            console.warn("Rol no reconocido:", rol);
+            window.location.href = "users/admin/admin-panel.html"; // Fallback
+            break;
+    }
 }
 
 // Permitir login con Enter

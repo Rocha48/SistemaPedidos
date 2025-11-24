@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Middware\**" />
+    <Content Remove="Middware\**" />
+    <EmbeddedResource Remove="Middware\**" />
+    <None Remove="Middware\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+	  <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10">
@@ -17,10 +26,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
 	
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Middware\" />
   </ItemGroup>
 
 </Project>

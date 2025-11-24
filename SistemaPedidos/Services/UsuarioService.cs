@@ -49,32 +49,53 @@ namespace sistemapedidos.Services
 
         public async Task<Usuario> CrearAsync(UsuarioDTO dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.Nombre))
-                throw new ArgumentException("El nombre del usuario es obligatorio.");
-
-            if (string.IsNullOrWhiteSpace(dto.Email))
-                throw new ArgumentException("El email es obligatorio.");
-
-            var emailExiste = await _context.Usuarios.AnyAsync(u => u.Email == dto.Email);
-            if (emailExiste)
-                throw new InvalidOperationException("Ya existe un usuario con ese email.");
-
-            var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == dto.Rol);
-            if (rol == null)
-                throw new InvalidOperationException("Rol no encontrado.");
-
-            var usuario = new Usuario
+            try
             {
-                Nombre = dto.Nombre,
-                Email = dto.Email,
-                IdRol = rol.IdRol,
-                Activo = dto.Activo,
-                FechaCreacion = dto.FechaCreacion
-            };
+              
+                if (string.IsNullOrWhiteSpace(dto.Nombre))
+                    throw new ArgumentException("El nombre del usuario es obligatorio.");
 
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
-            return usuario;
+                if (string.IsNullOrWhiteSpace(dto.Email))
+                    throw new ArgumentException("El email es obligatorio.");
+
+                if (string.IsNullOrWhiteSpace(dto.Password))
+                    throw new ArgumentException("La contraseña es obligatoria.");
+
+                
+                var emailExiste = await _context.Usuarios.AnyAsync(u => u.Email == dto.Email);
+                if (emailExiste)
+                    throw new InvalidOperationException("Ya existe un usuario con ese email.");
+
+                
+                var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == dto.Rol);
+                if (rol == null)
+                {
+                    throw new InvalidOperationException($"Rol '{dto.Rol}' no encontrado.");
+                }
+
+                var usuario = new Usuario
+                {
+                    Nombre = dto.Nombre,
+                    Email = dto.Email,
+                    ContraseñaHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                    IdRol = rol.IdRol,
+                    Activo = dto.Activo,
+                    FechaCreacion = DateTime.Now
+                };
+
+                _context.Usuarios.Add(usuario);
+                await _context.SaveChangesAsync();
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error al crear usuario: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"   Inner Exception: {ex.InnerException.Message}");
+
+                throw;
+            }
         }
 
         public async Task<bool> ActualizarAsync(int id, UsuarioDTO dto)
@@ -83,20 +104,22 @@ namespace sistemapedidos.Services
             if (usuario == null)
                 return false;
 
-            if (string.IsNullOrWhiteSpace(dto.Nombre))
-                throw new ArgumentException("El nombre del usuario es obligatorio.");
+            usuario.Nombre = dto.Nombre;
+            usuario.Email = dto.Email;
+            usuario.Activo = dto.Activo;
 
-            if (string.IsNullOrWhiteSpace(dto.Email))
-                throw new ArgumentException("El email es obligatorio.");
-
+         
             var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == dto.Rol);
             if (rol == null)
                 throw new InvalidOperationException("Rol no encontrado.");
 
-            usuario.Nombre = dto.Nombre;
-            usuario.Email = dto.Email;
             usuario.IdRol = rol.IdRol;
-            usuario.Activo = dto.Activo;
+
+            
+            if (!string.IsNullOrWhiteSpace(dto.Password))
+            {
+                usuario.ContraseñaHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+            }
 
             await _context.SaveChangesAsync();
             return true;

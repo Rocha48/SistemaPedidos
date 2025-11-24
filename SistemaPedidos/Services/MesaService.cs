@@ -13,10 +13,18 @@ namespace sistemapedidos.Business.Services
             _context = context;
         }
 
+        // Devuelve IdMesa, Numero, Estado, Capacidad y Activa
         public async Task<List<object>> ObtenerTodasAsync()
         {
             return await _context.Mesas
-                .Select(m => new { m.IdMesa, m.Numero, m.Estado })
+                .Select(m => new
+                {
+                    m.IdMesa,
+                    m.Numero,
+                    m.Estado,
+                    Capacidad = m.Capacidad,   // nullable included
+                    Activa = m.Activa
+                })
                 .ToListAsync<object>();
         }
 
@@ -24,20 +32,25 @@ namespace sistemapedidos.Business.Services
         {
             return await _context.Mesas
                 .Where(m => m.IdMesa == id)
-                .Select(m => new { m.IdMesa, m.Numero, m.Estado })
+                .Select(m => new
+                {
+                    m.IdMesa,
+                    m.Numero,
+                    m.Estado,
+                    Capacidad = m.Capacidad,
+                    Activa = m.Activa
+                })
                 .FirstOrDefaultAsync();
         }
 
         public async Task<Mesa> CrearAsync(Mesa mesa)
         {
-          
             var existe = await _context.Mesas.AnyAsync(m => m.Numero == mesa.Numero);
             if (existe)
                 throw new InvalidOperationException($"Ya existe una mesa con el número {mesa.Numero}.");
 
-           
-            if (mesa.Capacidad <= 0)
-                throw new ArgumentException("La capacidad de la mesa debe ser mayor a 0.");
+            if (mesa.Capacidad.HasValue && mesa.Capacidad <= 0)
+                throw new ArgumentException("La capacidad de la mesa debe ser mayor a 0 si se proporciona.");
 
             _context.Mesas.Add(mesa);
             await _context.SaveChangesAsync();
@@ -53,6 +66,7 @@ namespace sistemapedidos.Business.Services
             existing.Numero = mesa.Numero;
             existing.Estado = mesa.Estado;
             existing.Capacidad = mesa.Capacidad;
+            existing.Activa = mesa.Activa;
 
             await _context.SaveChangesAsync();
             return true;

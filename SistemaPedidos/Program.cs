@@ -10,21 +10,31 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ========================================
-// CONFIGURACIÓN DE LA BASE DE DATOS
-// ========================================
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins(
+            "http://127.0.0.1:5500",
+            "http://localhost:5500",
+            "http://127.0.0.1:5501",
+            "http://localhost:5501"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// ========================================
-// CONFIGURACIÓN DE APP SETTINGS (JWT)
-// ========================================
+
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-// ========================================
-// INYECCIÓN DE SERVICIOS
-// ========================================
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CategoriaService>();
 builder.Services.AddScoped<MesaService>();
@@ -35,9 +45,7 @@ builder.Services.AddScoped<DetallePedidoService>();
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<RolService>();
 
-// ========================================
-// CONFIGURAR AUTENTICACIÓN JWT
-// ========================================
+
 var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
 var key = Encoding.UTF8.GetBytes(appSettings.JwtSecret);
 
@@ -76,9 +84,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-// ========================================
-// CONFIGURACIÓN DE SERVICIOS PARA LA API
-// ========================================
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -88,10 +94,10 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "SistemaPedidos API",
         Version = "v1",
-        Description = "API para gestión de pedidos de restaurante"
+        Description = "API para gestiÃ³n de pedidos de restaurante"
     });
 
-    // Definir el esquema de seguridad Bearer JWT
+   
     var securityScheme = new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -125,14 +131,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// ========================================
-// CONSTRUIR APLICACIÓN
-// ========================================
+
 var app = builder.Build();
 
-// ========================================
-// PIPELINE HTTP
-// ========================================
+
+app.UseCors("AllowFrontend");
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -142,11 +147,9 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
 
-// IMPORTANTE: El orden es crucial
-app.UseAuthentication();  // Primero autenticación
-app.UseAuthorization();   // Luego autorización
+app.UseAuthentication();  
+app.UseAuthorization();   
 
 app.MapControllers();
 
