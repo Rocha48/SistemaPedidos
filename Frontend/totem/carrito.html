@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+
+<body class="pantalla-carrito">
+
+    <div class="carrito-contenedor">
+
+        <a href="menu.html" class="btn-volver">← Volver al menú</a>
+
+        <h1 class="titulo-carrito">Tu pedido</h1>
+        
+        <!-- Nombre del cliente -->
+        <div class="nombre-cliente-container">
+            <label for="nombre-cliente">¿Cuál es tu nombre?</label>
+            <input type="text" id="nombre-cliente" placeholder="Ingresá tu nombre" maxlength="50">
+        </div>
+
+        <!-- Lista de productos en el carrito -->
+        <div id="lista-carrito" class="carrito-items"></div>
+
+        <!-- 🆕 OBSERVACIONES GENERALES DEL PEDIDO -->
+        <div class="observaciones-generales-container">
+            <label for="observaciones-generales">
+                <strong>📝 Observaciones del pedido (opcional):</strong>
+            </label>
+            <textarea 
+                id="observaciones-generales" 
+                placeholder="Ej: Sin cebolla en la hamburguesa, papas bien cocidas, entregar en recepción..."
+                rows="4"
+                maxlength="300"
+            ></textarea>
+            <small class="observaciones-hint">
+                Acá podés indicar cualquier detalle especial de tu pedido (máx. 300 caracteres)
+            </small>
+        </div>
+
+        <!-- Total del pedido -->
+        <div class="carrito-total">
+            <span>Total:</span>
+            <strong>$<span id="total-precio">0</span></strong>
+        </div>
+
+        <!-- Botón confirmar -->
+        <button class="btn-confirmar" id="btn-confirmar">Confirmar pedido</button>
+
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

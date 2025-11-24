@@ -1,0 +1,137 @@
+﻿<script>
+    if (!localStorage.getItem("token")) {
+        window.location.href = "../../admin-login.html";
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Platos</title>
+    <link rel="stylesheet" href="../../css/estilos.css">
+</head>
+
+<body class="admin-panel-body">
+
+    <!-- SIDEBAR FIJO -->
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-user">
+            <div class="sidebar-user-icon">👤</div>
+            <p id="sidebar-username">Administrador</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="admin-panel.html">🏠 Inicio</a>
+            <a href="admin-mesas.html">📦 Mesas</a>
+            
+            <a href="admin-categorias.html">📂 Categorías</a>
+            <a href="admin-usuarios.html">👤 Usuarios</a>
+            
+        </nav>
+
+        <button class="sidebar-logout" onclick="cerrarSesion()">⛔ Cerrar sesión</button>
+    </aside>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="admin-main">
+
+        <header class="admin-header">
+            <button class="menu-mobile-btn" onclick="toggleMenuMobile()">☰</button>
+            <h1>🍔 Gestión de Platos</h1>
+            <a href="admin-panel.html" class="btn-volver">⬅ Volver</a>
+        </header>
+
+        <div class="admin-platos-container">
+
+            <!-- FORMULARIO -->
+            <div class="card-form">
+                <h2 id="titulo-form-plato">Crear Plato</h2>
+
+                <input type="text" id="plato-nombre" placeholder="Nombre del plato">
+                <input type="number" id="plato-precio" placeholder="Precio en pesos" min="1">
+
+                <select id="plato-categoria"></select>
+
+                <input type="text" id="plato-img" placeholder="Ruta de imagen (img/ejemplo.jpg)">
+
+                <label>
+                    <input type="checkbox" id="plato-disponible">
+                    Disponible
+                </label>
+
+                <button id="btn-guardar-plato" onclick="guardarPlato()">Guardar</button>
+                <button id="btn-cancelar-plato" class="btn-secundario oculto" onclick="cancelarEdicionPlato()">Cancelar</button>
+            </div>
+
+            <!-- LISTADO -->
+            <div class="card-lista">
+                <h2>Listado de Platos</h2>
+
+                <table class="tabla-admin">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Plato</th>
+                            <th>Precio</th>
+                            <th>Categoría</th>
+                            <th>Disponible</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabla-platos">
+                        <!-- ITEMS AQUÍ -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../../js/script.js"></script>
+
+
+    <!-- MODAL DE CERRAR SESIÓN -->
+    <div id="modalLogout" class="modal-logout oculto">
+        <div class="modal-content-logout">
+            <h3>¿Cerrar sesión?</h3>
+            <p>¿Estás seguro que deseas cerrar tu sesión?</p>
+
+            <div class="modal-btns">
+                <button id="logout-confirm" class="btn-confirmar">Sí, cerrar</button>
+                <button id="logout-cancel" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SIDEBAR MÓVIL -->
+    <div id="sidebarMobile" class="sidebar-mobile oculto">
+
+        <div class="sidebar-mobile-content">
+
+            <div class="sidebar-user">
+                <div class="sidebar-user-icon">👤</div>
+                <p>Administrador</p>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="admin-panel.html">🏠 Inicio</a>
+                <a href="admin-mesas.html">📦 Mesas</a>
+                
+                <a href="admin-categorias.html">📂 Categorías</a>
+                <a href="admin-usuarios.html">👤 Usuarios</a>
+                
+            </nav>
+
+            <button class="sidebar-logout" onclick="cerrarSesion()">⛔ Cerrar sesión</button>
+
+        </div>
+    </div>
+
+</body>
+</html>

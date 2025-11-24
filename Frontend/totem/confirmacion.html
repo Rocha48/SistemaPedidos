@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedido Confirmado</title>
+     <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body class="pantalla-confirmacion">
+
+    <h1>¡Pedido confirmado!</h1>
+    <p>Tu pedido se ha registrado exitosamente</p>
+
+    <h2>CÓDIGO DE PEDIDO:</h2>
+    <p id="codigo-pedido">-</p>
+
+    <h3>Detalles del pedido</h3>
+
+    <p><strong>Cliente:</strong> <span id="nombre-cliente-confirmacion">-</span></p>
+    <p><strong>Método de pago:</strong> <span id="pago-metodo">-</span></p>
+    <p><strong>Tipo de pedido:</strong> <span id="tipo-pedido-confirmacion">-</span></p>
+    <p><strong>Mesa:</strong> <span id="mesa-confirmacion">-</span></p>
+
+
+
+    <!-- OBSERVACIONES -->
+    <div id="observaciones-box" style="display:none;">
+        <p><strong>Observaciones:</strong></p>
+        <p id="observaciones-confirmacion"></p>
+    </div>
+
+    <p>Por favor, dirigite al mostrador y mostrá tu código cuando tu pedido esté listo.</p>
+
+    <button onclick="volverInicio()">Volver al inicio</button>
+
+    <!-- Archivo JS -->
+    <script src="../js/script.js"></script>
+
+</body>
+</html>

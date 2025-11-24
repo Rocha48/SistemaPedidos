@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Login</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body class="login-container">
+
+    <div class="login-box">
+        <h1 class="login-title">Administrador</h1>
+
+        <input type="text" id="usuario" class="login-input" placeholder="Usuario">
+
+        <input type="password" id="password" class="login-input" placeholder="Contraseña">
+
+        <button class="login-btn" onclick="loginAdmin()">
+            Iniciar sesión
+        </button>
+
+        <p id="login-error" class="login-error"></p>
+    </div>
+
+    <script src="js/adminLogin.js"></script>
+</body>
+</html>

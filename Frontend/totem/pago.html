@@ -1,0 +1,138 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Método de Pago</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+
+<body class="pantalla-pago">
+
+    <div class="pago-contenedor">
+
+        <a href="carrito.html" class="btn-volver">← Volver</a>
+
+        <h1 class="titulo-pago">Seleccioná un método de pago</h1>
+
+        <!-- Total -->
+        <div class="pago-total">
+            Total a pagar: <span id="monto-total"></span>
+        </div>
+
+        <!-- Opciones -->
+        <div class="opciones-pago">
+
+            <div class="opcion-pago" data-metodo="efectivo">
+                <img src="../img/efectivo.png" alt="Efectivo">
+                <p>Efectivo</p>
+            </div>
+
+            <div class="opcion-pago" data-metodo="tarjeta">
+                <img src="../img/tarjeta.png" alt="Tarjeta">
+                <p>Tarjeta</p>
+            </div>
+
+            <div class="opcion-pago" data-metodo="qr">
+                <img src="../img/qr.png" alt="QR">
+                <p>Pago con QR</p>
+            </div>
+
+        </div>
+
+        <!-- Botón de confirmar -->
+        <button id="btn-confirmar-pago" class="btn-confirmar-pago" disabled>
+            Confirmar pago
+        </button>
+
+    </div>
+
+    <script src="../js/script.js"></script>
+
+
+    <!-- MODAL TARJETA (DÉBITO) -->
+    <div id="modal-tarjeta" class="modal-general oculto">
+        <div class="modal-contenido">
+
+            <h2>Método de pago: Tarjeta de débito</h2>
+
+            <p class="modal-texto">
+                Tarjetas aceptadas:
+            </p>
+
+            <div class="tarjetas-aceptadas">
+                <img src="../img/mastercard.png">
+                <img src="../img/visa.png">
+                <img src="../img/debito.png">
+            </div>
+
+            <p class="modal-texto">
+                Vas a pagar: <strong id="total-tarjeta"></strong>
+            </p>
+
+            <p class="modal-texto">
+                Productos seleccionados:
+            </p>
+
+            <ul id="lista-tarjeta" class="lista-modal"></ul>
+
+            <p class="modal-texto">
+                Por favor, deslizá tu tarjeta por el POSNET para completar el pago.
+            </p>
+
+            <img src="../img/pasar-tarjeta.gif" class="modal-imagen">
+
+            <div class="modal-botones">
+                <button id="btn-tarjeta-volver" class="btn-modal-sec">← Volver</button>
+                <button id="btn-tarjeta-confirmar" class="btn-modal-ok">Ya pasé mi tarjeta</button>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- MODAL QR -->
+    <div id="modal-qr" class="modal-general oculto">
+        <div class="modal-contenido">
+
+            <h2>Método de pago: QR</h2>
+
+            <p class="modal-texto">
+                Escaneá este código desde tu app bancaria.
+            </p>
+
+            <img src="../img/qr-pago.png" class="qr-imagen">
+
+            <p class="modal-texto">
+                Total a pagar: <strong id="total-qr"></strong>
+            </p>
+
+            <p class="modal-texto">
+                Productos seleccionados:
+            </p>
+
+            <ul id="lista-qr" class="lista-modal"></ul>
+
+            <img src="../img/scan-qr.gif" class="modal-imagen">
+
+            <p class="modal-texto">
+                Una vez que completes el pago, presioná el botón de abajo.
+            </p>
+
+            <div class="modal-botones">
+                <button id="btn-qr-volver" class="btn-modal-sec">← Volver</button>
+                <button id="btn-qr-confirmar" class="btn-modal-ok">Ya pagué</button>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
