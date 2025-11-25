@@ -4,212 +4,311 @@ window.onpopstate = () => {
     history.pushState(null, "", location.href);
 };
 
+/* =======================================
+   MÓDULO DE SELECCIÓN DE MESAS (TÓTEM)
+   ======================================= */
 
+async function cargarMesasTotem() {
+    const API_URL = "http://localhost:5151/api/Mesas/publicas";
 
+    try {
+        const response = await fetch(API_URL);
 
+        if (!response.ok) {
+            throw new Error("Error al obtener mesas: " + response.status);
+        }
 
-// -----------------------------
-// CARGA DE CATEGORÍAS
-// -----------------------------
-function cargarCategorias() {
-    const contenedor = document.getElementById("lista-categorias");
+        const mesas = await response.json();
+        const contenedor = document.getElementById("mesas-grid");
+        if (!contenedor) return;
+        contenedor.innerHTML = "";
 
-    // Agregar botón "TODOS" primero
-    const btnTodos = document.createElement("div");
-    btnTodos.className = "categoria-btn";
-    btnTodos.textContent = "Todos";
-    
-    btnTodos.onclick = () => {
-        mostrarTodosLosProductos();
-        cerrarSidebar();
-    };
-    
-    contenedor.appendChild(btnTodos);
+        mesas.forEach(m => {
+            const btn = document.createElement("button");
+            btn.classList.add("mesa-btn");
 
-    // Agregar categorías
-    categorias.forEach(cat => {
-        const btn = document.createElement("div");
-        btn.className = "categoria-btn";
-        btn.textContent = cat.nombre;
+            const numero = m.numero ?? m.Numero;
+            const estado = m.estado ?? m.Estado;
 
-        btn.onclick = () => {
-            filtrarPorCategoria(cat.id);
+            if (estado && estado.toLowerCase() === "ocupada") {
+                btn.classList.add("mesa-ocupada");
+                btn.textContent = `Mesa ${numero} (ocupada)`;
+                btn.disabled = true;
+            } else {
+                btn.classList.add("mesa-libre");
+                btn.textContent = `Mesa ${numero}`;
+                btn.onclick = () => seleccionarMesaTotem(numero, btn);
+            }
+
+            contenedor.appendChild(btn);
+        });
+
+    } catch (error) {
+        alert("❌ Error cargando mesas.");
+        console.error(error);
+    }
+}
+
+let mesaSeleccionadaTotem = null;
+
+function seleccionarMesaTotem(numMesa, boton) {
+    mesaSeleccionadaTotem = numMesa;
+
+    document.querySelectorAll(".mesa-btn").forEach(b =>
+        b.classList.remove("mesa-seleccionada")
+    );
+
+    boton.classList.add("mesa-seleccionada");
+
+    const btnContinuar = document.getElementById("btnContinuar");
+    if (btnContinuar) btnContinuar.disabled = false;
+}
+
+function confirmarMesa() {
+    if (!mesaSeleccionadaTotem) return;
+
+    localStorage.setItem("tipoPedido", "local");
+    localStorage.setItem("mesaSeleccionada", mesaSeleccionadaTotem);
+
+    window.location.href = "../totem/menu.html";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("mesas-grid")) {
+        cargarMesasTotem();
+    }
+});
+
+/* ======================================================
+   CATEGORÍAS Y PRODUCTOS (TÓTEM) - CONEXIÓN REAL API
+   ====================================================== */
+
+const API_CATEGORIAS = "http://localhost:5151/api/Categorias";
+const API_PLATOS = "http://localhost:5151/api/Platos"; // <-- unificado
+
+let categoriasBackend = [];
+let productosBackend = [];
+
+/* CARGAR CATEGORÍAS */
+async function cargarCategorias() {
+    try {
+        const resp = await fetch(API_CATEGORIAS);
+        if (!resp.ok) throw new Error("Error obteniendo categorías");
+
+        categoriasBackend = await resp.json();
+
+        const contenedor = document.getElementById("lista-categorias");
+        if (!contenedor) return;
+        contenedor.innerHTML = "";
+
+        // Botón TODOS
+        const btnTodos = document.createElement("div");
+        btnTodos.className = "categoria-btn";
+        btnTodos.textContent = "Todos";
+        btnTodos.onclick = () => {
+            mostrarTodosLosProductos();
             cerrarSidebar();
         };
+        contenedor.appendChild(btnTodos);
 
-        contenedor.appendChild(btn);
-    });
+        // CATEGORÍAS DINÁMICAS
+        categoriasBackend.forEach(cat => {
+            const nombreCat = cat.nombre ?? cat.Nombre;
+
+            const btn = document.createElement("div");
+            btn.className = "categoria-btn";
+            btn.textContent = nombreCat;
+            btn.onclick = () => {
+                filtrarPorCategoria(nombreCat);
+                cerrarSidebar();
+            };
+
+            contenedor.appendChild(btn);
+        });
+
+    } catch (e) {
+        console.error(e);
+        alert("❌ Error al cargar categorías");
+    }
 }
 
+/* CARGAR PRODUCTOS */
+async function cargarProductos() {
+    try {
+        const resp = await fetch(API_PLATOS);
+        if (!resp.ok) throw new Error("Error productos");
 
-// -----------------------------
-// CERRAR SIDEBAR
-// -----------------------------
-function cerrarSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("sidebar-overlay");
-    
-    if (sidebar) sidebar.classList.remove("sidebar-open");
-    if (overlay) overlay.classList.remove("activo");
-    document.body.classList.remove("menu-abierto");
+        productosBackend = await resp.json();
+
+        mostrarTodosLosProductos();
+        cargarSugerencias();
+
+    } catch (e) {
+        console.error(e);
+        alert("Error cargando productos");
+    }
 }
 
-// -----------------------------
-// TOGGLE SIDEBAR
-// -----------------------------
-function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("sidebar-overlay");
-    
-    sidebar.classList.toggle("sidebar-open");
-    overlay.classList.toggle("activo");
-    document.body.classList.toggle("menu-abierto");
-}
-
-// -----------------------------
-// MOSTRAR TODOS LOS PRODUCTOS
-// -----------------------------
+/* MOSTRAR TODOS */
 function mostrarTodosLosProductos() {
     const contenedor = document.getElementById("lista-productos");
     contenedor.innerHTML = "";
 
-    productos.forEach(prod => {
+    productosBackend.forEach(prod => {
         contenedor.appendChild(crearCardProducto(prod));
     });
 }
 
-
-
-
-
-// -----------------------------
-// CARGA DE PRODUCTOS
-// -----------------------------
-function cargarProductos() {
-    const contenedor = document.getElementById("lista-productos");
-
-    productos.forEach(prod => {
-        contenedor.appendChild(crearCardProducto(prod));
-    });
-}
-
-// -----------------------------
-// PRODUCTOS SUGERIDOS
-// -----------------------------
+/* SUGERENCIAS */
 function cargarSugerencias() {
     const contenedor = document.getElementById("sugerencias");
+    if (!contenedor) return;
 
-    productos
-        .filter(p => p.sugerido)
-        .forEach(prod => {
-            contenedor.appendChild(crearCardProducto(prod));
-        });
+    contenedor.innerHTML = "";
+
+    productosBackend
+        .filter(p => p.sugerido ?? p.Sugerido)
+        .forEach(prod => contenedor.appendChild(crearCardProducto(prod)));
 }
 
-// -----------------------------
-// CREAR TARJETA
-// -----------------------------
+/* CARD DE PRODUCTO */
 function crearCardProducto(prod) {
+    const nombre = prod.nombre;
+    const precio = prod.precio;
+    const categoria = prod.categoria;
+    const imagen = prod.imagenURL;
+    const id = prod.idPlato;
+
     const div = document.createElement("div");
     div.className = "item-card";
 
+    const rutaImagen = `../Frontend/img/${imagen.split('/').pop()}`;
+
     div.innerHTML = `
-        <img src="${prod.img}" alt="${prod.nombre}">
-        <h3>${prod.nombre}</h3>
-        <p>$${prod.precio}</p>
+        <img src="${rutaImagen}" alt="${nombre}">
+        <h3>${nombre}</h3>
+        <p>$${precio}</p>
     `;
 
     div.onclick = () => {
-        window.location.href = `detalle.html?id=${prod.id}`;
+        window.location.href = `detalle.html?id=${id}`;
     };
 
     return div;
 }
 
-// -----------------------------
-// FILTRO POR CATEGORÍA
-// -----------------------------
-function filtrarPorCategoria(catId) {
+/* FILTRAR */
+function filtrarPorCategoria(nombreCategoria) {
     const contenedor = document.getElementById("lista-productos");
     contenedor.innerHTML = "";
 
-    productos
-        .filter(p => p.categoria === catId)
+    productosBackend
+        .filter(p => p.categoria === nombreCategoria)
         .forEach(prod => contenedor.appendChild(crearCardProducto(prod)));
 }
 
-// -----------------------------
-// INICIALIZAR (solo en menu.html)
-// -----------------------------
+/* INICIALIZAR EN menu.html */
 if (document.body.classList.contains("pantalla-menu")) {
     cargarCategorias();
-    cargarSugerencias();
     cargarProductos();
 }
 
+/* ======================================================
+   SIDEBAR
+====================================================== */
+function cerrarSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
 
-// -----------------------------
-// DETALLE DEL PRODUCTO
-// -----------------------------
-if (document.body.classList.contains("pantalla-detalle")) {
+    if (sidebar) sidebar.classList.remove("sidebar-open");
+    if (overlay) overlay.classList.remove("activo");
+}
 
-    // Obtener id desde la URL
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+
+    sidebar.classList.toggle("sidebar-open");
+    overlay.classList.toggle("activo");
+}
+
+/* =======================================
+   DETALLE DEL PRODUCTO (BACKEND REAL)
+   ======================================= */
+
+async function cargarDetalleProducto() {
     const params = new URLSearchParams(window.location.search);
     const idProducto = parseInt(params.get("id"));
 
-    // Buscar producto
-    const producto = productos.find(p => p.id === idProducto);
+    if (isNaN(idProducto)) {
+        alert("Producto inválido");
+        return;
+    }
 
-    // Cargar datos en pantalla
-    document.getElementById("detalle-img").src = producto.img;
-    document.getElementById("detalle-nombre").textContent = producto.nombre;
-    document.getElementById("detalle-descripcion").textContent = "Una deliciosa opción para disfrutar."; // texto simulado
-    document.getElementById("detalle-precio").textContent = producto.precio;
+    try {
+        const resp = await fetch(`${API_PLATOS}/${idProducto}`);
+        if (!resp.ok) throw new Error("No se pudo cargar el producto");
 
-    let cantidad = 1;
+        const prod = await resp.json();
+        const { nombre, descripcion, precio, imagenURL } = prod;
+        const rutaImagen = `../Frontend/img/${imagenURL.split('/').pop()}`;
 
-    // Botón sumar
-    document.getElementById("btn-sumar").onclick = () => {
-        cantidad++;
-        document.getElementById("cantidad").textContent = cantidad;
-    };
+        document.getElementById("detalle-img").src = rutaImagen;
+        document.getElementById("detalle-nombre").textContent = nombre;
+        document.getElementById("detalle-descripcion").textContent = descripcion || "Sin descripción";
+        document.getElementById("detalle-precio").textContent = precio;
 
-    // Botón restar
-    document.getElementById("btn-restar").onclick = () => {
-        if (cantidad > 1) {
-            cantidad--;
-            document.getElementById("cantidad").textContent = cantidad;
-        }
-    };
+        let cantidad = 1;
+        const cantidadSpan = document.getElementById("cantidad");
 
-    // Agregar al carrito
-    document.getElementById("btn-agregar").onclick = () => {
+        document.getElementById("btn-sumar").onclick = () => {
+            cantidad++;
+            cantidadSpan.textContent = cantidad;
+        };
 
+        document.getElementById("btn-restar").onclick = () => {
+            if (cantidad > 1) {
+                cantidad--;
+                cantidadSpan.textContent = cantidad;
+            }
+        };
+
+        document.getElementById("btn-agregar").onclick = () => {
         let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-        // Ver si ya existe ese producto
-        let existente = carrito.find(item => item.id === producto.id);
+        let existente = carrito.find(item => item.id === idProducto);
 
         if (existente) {
             existente.cantidad += cantidad;
         } else {
-            carrito.push({
-                id: producto.id,
-                nombre: producto.nombre,
-                precio: producto.precio,
-                img: producto.img,
-                cantidad: cantidad,
-               
+            // ✅ GUARDAR TODA LA INFO DEL PRODUCTO
+            carrito.push({ 
+                id: idProducto, 
+                nombre: nombre,
+                descripcion: descripcion || "",
+                precio: precio,
+                idCategoria: prod.idCategoria || 0, // ← IMPORTANTE
+                img: rutaImagen, // ← Usar "img" no "imagen"
+                imagenURL: imagenURL,
+                cantidad: cantidad
             });
         }
 
-        localStorage.setItem("carrito", JSON.stringify(carrito));
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    alert("Producto agregado al pedido ✔");
+    window.location.href = "menu.html";
+};
 
-        alert("Producto agregado al carrito");
-        window.location.href = "menu.html";
-    };
+    } catch (err) {
+        console.error(err);
+        alert("❌ Error cargando el detalle del producto");
+    }
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.body.classList.contains("pantalla-detalle")) {
+        cargarDetalleProducto();
+    }
+});
 
 // -----------------------------
 // CARRITO
@@ -247,21 +346,24 @@ if (document.body.classList.contains("pantalla-carrito")) {
             lista.appendChild(div);
         });
 
-        totalPrecio.textContent = total;
+        totalPrecio.textContent = total.toFixed(2);
         localStorage.setItem("carrito", JSON.stringify(carrito));
     }
 
-    // SUMAR / RESTAR / ELIMINAR
     window.sumarItem = function (id) {
-        let item = carrito.find(p => p.id === id);
-        item.cantidad++;
-        actualizarCarrito();
+        const item = carrito.find(p => p.id === id);
+        if (item) {
+            item.cantidad++;
+            actualizarCarrito();
+        }
     };
 
     window.restarItem = function (id) {
-        let item = carrito.find(p => p.id === id);
-        if (item.cantidad > 1) item.cantidad--;
-        actualizarCarrito();
+        const item = carrito.find(p => p.id === id);
+        if (item && item.cantidad > 1) {
+            item.cantidad--;
+            actualizarCarrito();
+        }
     };
 
     window.eliminarItem = function (id) {
@@ -271,41 +373,92 @@ if (document.body.classList.contains("pantalla-carrito")) {
 
     actualizarCarrito();
 
-    // -----------------------------
-    // CONFIRMAR PEDIDO
-    // -----------------------------
-    document.getElementById("btn-confirmar").onclick = () => {
-    
-        if (carrito.length === 0) {
-            alert("No podés confirmar un pedido vacío.");
-            return;
-        }
+    document.getElementById("btn-confirmar").onclick = async () => {
+    if (carrito.length === 0) {
+        alert("No podés confirmar un pedido vacío.");
+        return;
+    }
 
-        // Nombre del cliente
-        const nombreCliente = document.getElementById("nombre-cliente").value.trim();
-        
-        if (!nombreCliente) {
-            alert("Por favor, ingresá tu nombre para continuar.");
-            document.getElementById("nombre-cliente").focus();
-            return;
-        }
+    const nombreCliente = document.getElementById("nombre-cliente").value.trim();
+    if (!nombreCliente) {
+        alert("Por favor, ingresá tu nombre para continuar.");
+        document.getElementById("nombre-cliente").focus();
+        return;
+    }
 
-        //  OBTENER OBSERVACIONES EN EL MOMENTO CORRECTO
-        const observacionesGenerales = document
-            .getElementById("observaciones-generales")
-            .value
-            .trim();
+    const observacionesGenerales = document.getElementById("observaciones-generales").value.trim();
+    localStorage.setItem("nombreCliente", nombreCliente);
+    localStorage.setItem("observacionesGenerales", observacionesGenerales);
 
-        // Guardar datos correctamente
-        localStorage.setItem("nombreCliente", nombreCliente);
-        localStorage.setItem("observacionesGenerales", observacionesGenerales);
+    const total = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+    const mesaSeleccionada = parseInt(localStorage.getItem("mesaSeleccionada")) || 0;
 
-        // Ir a pago
-        window.location.href = "pago.html";
+    // ✅ SOLUCIÓN: Enviar objetos mínimos pero válidos
+    const pedido = {
+        NombreCliente: nombreCliente,
+        FechaHora: new Date().toISOString(),
+        Estado: "Pendiente",
+        Total: total,
+        NumeroMesa: mesaSeleccionada,
+        Pagos: [], // Array vacío
+        Detalles: carrito.map(item => {
+            const subtotal = item.precio * item.cantidad;
+            return {
+                IdPlato: item.id,
+                IdPedido: 0, // Se auto-asigna
+                Cantidad: item.cantidad,
+                PrecioUnitario: item.precio,
+                Subtotal: subtotal,
+                Observaciones: observacionesGenerales || "",
+                // Objetos mínimos requeridos
+                Plato: {
+                    IdPlato: item.id,
+                    Nombre: "",
+                    Precio: 0,
+                    IdCategoria: 0,
+                    Disponible: true,
+                    FechaCreacion: new Date().toISOString()
+                },
+                Pedido: {
+                    IdPedido: 0,
+                    NombreCliente: "",
+                    FechaHora: new Date().toISOString(),
+                    Estado: "",
+                    Total: 0,
+                    NumeroMesa: 0
+                }
+            };
+        })
     };
 
-}
+    console.log("📤 Enviando pedido:", JSON.stringify(pedido, null, 2));
 
+    try {
+        const resp = await fetch("http://localhost:5151/api/Pedidos/publico", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(pedido)
+        });
+
+        if (!resp.ok) {
+            const texto = await resp.text();
+            console.error("❌ Error del servidor:", texto);
+            throw new Error(`Error ${resp.status}: ${texto}`);
+        }
+
+        const data = await resp.json();
+        console.log("✅ Respuesta del servidor:", data);
+        localStorage.setItem("pedidoId", data.id);
+        alert("✅ Pedido confirmado! ID: " + data.id);
+        localStorage.removeItem("carrito");
+        window.location.href = "pago.html";
+
+    } catch (error) {
+        console.error("❌ Error completo:", error);
+        alert("❌ No se pudo confirmar el pedido: " + error.message);
+        }
+    };
+}
 
 
 // -----------------------------
@@ -314,121 +467,6 @@ if (document.body.classList.contains("pantalla-carrito")) {
 function abrirCarrito() {
     window.location.href = "carrito.html";
 }
-
-
-/// ===============================
-//   PANTALLA DE PAGO (MEJORADA)
-// ===============================
-if (document.body.classList.contains("pantalla-pago")) {
-
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    let total = carrito.reduce((s, p) => s + p.precio * p.cantidad, 0);
-
-    // Mostrar total en pantalla si existe el elemento
-    const monto = document.getElementById("monto-total");
-    if (monto) monto.textContent = "$" + total;
-
-    let metodoSeleccionado = null;
-
-    const opciones = document.querySelectorAll(".opcion-pago");
-    const btnConfirmar = document.getElementById("btn-confirmar-pago");
-
-    // Selección visual
-    opciones.forEach(op => {
-        op.addEventListener("click", () => {
-            opciones.forEach(o => o.classList.remove("pago-activo"));
-            op.classList.add("pago-activo");
-
-            metodoSeleccionado = op.dataset.metodo;
-            btnConfirmar.disabled = false;
-        });
-    });
-
-    // -----------------------------
-    // BOTÓN CONFIRMAR
-    // -----------------------------
-    btnConfirmar.addEventListener("click", () => {
-
-        if (!metodoSeleccionado) {
-            alert("Seleccioná un método de pago.");
-            return;
-        }
-
-        localStorage.setItem("metodoPago", metodoSeleccionado);
-
-        // ------------------------------------
-        // EFECTIVO
-        // ------------------------------------
-        if (metodoSeleccionado === "efectivo") {
-            alert("Por favor acercate a caja para realizar el pago.");
-            window.location.href = "confirmacion.html";
-            return;
-        }
-
-        // ------------------------------------
-        // TARJETA (DÉBITO)
-        // ------------------------------------
-        if (metodoSeleccionado === "tarjeta") {
-
-            // llenar modal
-            document.getElementById("total-tarjeta").textContent = "$" + total;
-
-            const listaT = document.getElementById("lista-tarjeta");
-            listaT.innerHTML = "";
-            carrito.forEach(p => {
-                const li = document.createElement("li");
-                li.textContent = `${p.nombre} x${p.cantidad}`;
-                listaT.appendChild(li);
-            });
-
-            // abrir modal
-            document.getElementById("modal-tarjeta").classList.remove("oculto");
-
-            // botón volver
-            document.getElementById("btn-tarjeta-volver").onclick = () => {
-                document.getElementById("modal-tarjeta").classList.add("oculto");
-            };
-
-            // botón "ya pasé mi tarjeta"
-            document.getElementById("btn-tarjeta-confirmar").onclick = () => {
-                window.location.href = "confirmacion.html";
-            };
-
-            return;
-        }
-
-        // ------------------------------------
-        // PAGO CON QR
-        // ------------------------------------
-        if (metodoSeleccionado === "qr") {
-
-            document.getElementById("total-qr").textContent = "$" + total;
-
-            const listaQ = document.getElementById("lista-qr");
-            listaQ.innerHTML = "";
-            carrito.forEach(p => {
-                const li = document.createElement("li");
-                li.textContent = `${p.nombre} x${p.cantidad}`;
-                listaQ.appendChild(li);
-            });
-
-            document.getElementById("modal-qr").classList.remove("oculto");
-
-            // volver
-            document.getElementById("btn-qr-volver").onclick = () => {
-                document.getElementById("modal-qr").classList.add("oculto");
-            };
-
-            // ya pagué
-            document.getElementById("btn-qr-confirmar").onclick = () => {
-                window.location.href = "confirmacion.html";
-            };
-
-            return;
-        }
-    });
-}
-
 // ==============================
 //   PANTALLA DE CONFIRMACIÓN
 // ==============================

@@ -51,6 +51,26 @@ namespace sistemapedidos.Controllers
             }
         }
 
+
+        [HttpPost("publico")]
+        [AllowAnonymous] // Esto hace que sea público, sin autorización
+        [Produces("application/json")]
+        public async Task<IActionResult> PostPedidoPublico([FromBody] Pedido pedido)
+        {
+            try
+            {
+                var nuevoPedido = await _service.CrearAsync(pedido);
+                return Ok(new { message = "Pedido creado correctamente.", id = nuevoPedido.IdPedido });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+
+
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrador,Cajero,Cocina,Mozo")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)

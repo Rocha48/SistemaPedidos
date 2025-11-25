@@ -26,6 +26,16 @@ namespace sistemapedidos.Controllers
             return Ok(platos);
         }
 
+
+        [HttpGet("publicos")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPublicos()
+        {
+            var platos = await _service.ObtenerTodosAsync();
+            return Ok(platos);
+        }
+
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetPlato(int id)

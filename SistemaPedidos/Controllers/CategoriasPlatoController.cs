@@ -26,6 +26,15 @@ namespace sistemapedidos.Controllers
             return Ok(categorias);
         }
 
+        [HttpGet("publicas")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPublicas()
+        {
+            var categorias = await _service.ObtenerTodasAsync();
+            return Ok(categorias);
+        }
+
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetCategoria(int id)

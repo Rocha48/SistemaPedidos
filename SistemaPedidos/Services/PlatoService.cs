@@ -34,6 +34,7 @@ namespace sistemapedidos.Services
         public async Task<PlatoDTO?> ObtenerPorIdAsync(int id)
         {
             return await _context.Platos
+                .AsNoTracking()
                 .Include(p => p.Categoria)
                 .Where(p => p.IdPlato == id)
                 .Select(p => new PlatoDTO
