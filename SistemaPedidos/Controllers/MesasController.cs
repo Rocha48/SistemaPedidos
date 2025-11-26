@@ -26,9 +26,7 @@ namespace sistemapedidos.Controllers
             return Ok(mesas);
         }
 
-        // ---------------------------
-        // ENDPOINT PÚBLICO PARA TÓTEM
-        // ---------------------------
+       
         [HttpGet("publicas")]
         [AllowAnonymous]
         public async Task<IActionResult> GetMesasPublicas()

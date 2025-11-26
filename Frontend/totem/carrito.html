@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito</title>
+    <title>Carrito - Mi Pedido</title>
     <link rel="stylesheet" href="../css/estilos.css">
 </head>
 
@@ -11,20 +11,32 @@
 
     <div class="carrito-contenedor">
 
+        <!-- Botón volver -->
         <a href="menu.html" class="btn-volver">← Volver al menú</a>
 
-        <h1 class="titulo-carrito">Tu pedido</h1>
+        <!-- Título -->
+        <h1 class="titulo-carrito">🛒 Tu pedido</h1>
         
         <!-- Nombre del cliente -->
         <div class="nombre-cliente-container">
-            <label for="nombre-cliente">¿Cuál es tu nombre?</label>
-            <input type="text" id="nombre-cliente" placeholder="Ingresá tu nombre" maxlength="50">
+            <label for="nombre-cliente">¿Cuál es tu nombre? <span style="color: red;">*</span></label>
+            <input 
+                type="text" 
+                id="nombre-cliente" 
+                placeholder="Ingresá tu nombre" 
+                maxlength="50"
+                required
+            >
         </div>
 
         <!-- Lista de productos en el carrito -->
-        <div id="lista-carrito" class="carrito-items"></div>
+        <div id="lista-carrito" class="carrito-items">
+            <div style="text-align: center; padding: 40px; color: #999;">
+                <p>⏳ Cargando carrito...</p>
+            </div>
+        </div>
 
-        <!-- 🆕 OBSERVACIONES GENERALES DEL PEDIDO -->
+        <!-- Observaciones generales del pedido -->
         <div class="observaciones-generales-container">
             <label for="observaciones-generales">
                 <strong>📝 Observaciones del pedido (opcional):</strong>
@@ -36,21 +48,24 @@
                 maxlength="300"
             ></textarea>
             <small class="observaciones-hint">
-                Acá podés indicar cualquier detalle especial de tu pedido (máx. 300 caracteres)
+                💡 Acá podés indicar cualquier detalle especial de tu pedido (máx. 300 caracteres)
             </small>
         </div>
 
         <!-- Total del pedido -->
         <div class="carrito-total">
             <span>Total:</span>
-            <strong>$<span id="total-precio">0</span></strong>
+            <strong>$<span id="total-precio">0.00</span></strong>
         </div>
 
         <!-- Botón confirmar -->
-        <button class="btn-confirmar" id="btn-confirmar">Confirmar pedido</button>
+        <button class="btn-confirmar" id="btn-confirmar">
+            ✅ Confirmar pedido
+        </button>
 
     </div>
 
-    <script src="../js/script.js"></script>
+    <!-- Script exclusivo del carrito -->
+    <script src="../js/carrito.js"></script>
 </body>
 </html>

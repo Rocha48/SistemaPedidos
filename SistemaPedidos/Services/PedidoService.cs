@@ -49,15 +49,7 @@ namespace sistemapedidos.Services
             if (string.IsNullOrWhiteSpace(pedido.NombreCliente))
                 throw new ArgumentException("El nombre del cliente es obligatorio.");
 
-            // ✅ Desconectar las entidades relacionadas para evitar que EF intente crearlas
-            if (pedido.Detalles != null)
-            {
-                foreach (var detalle in pedido.Detalles)
-                {
-                    detalle.Plato = null;  // Solo usar IdPlato
-                    detalle.Pedido = null; // EF lo asociará automáticamente
-                }
-            }
+          
 
             _context.Pedidos.Add(pedido);
             await _context.SaveChangesAsync();

@@ -14,7 +14,7 @@ namespace sistemapedidos.Models
         public decimal Total { get; set; }
         public int NumeroMesa { get; set; }
 
-        public ICollection<DetallePedido> Detalles { get; set; }
-        public ICollection<Pago> Pagos { get; set; }
+        public ICollection<DetallePedido>? Detalles { get; set; }
+        public ICollection<Pago>? Pagos { get; set; }
     }
 }

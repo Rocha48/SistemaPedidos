@@ -4873,6 +4873,304 @@ body {
     }
 }
 
+
+
+/* ===================================
+   PÁGINA DEL CARRITO
+   =================================== */
+
+.carrito-body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.carrito-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header del carrito */
+.carrito-header {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.carrito-header h1 {
+    margin: 0;
+    color: #333;
+    font-size: 28px;
+}
+
+/* Lista de items */
+.carrito-lista {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    min-height: 200px;
+}
+
+.carrito-vacio {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    font-size: 18px;
+}
+
+.carrito-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 20px;
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    align-items: center;
+}
+
+.carrito-item:last-child {
+    border-bottom: none;
+}
+
+.carrito-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.item-info h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.item-info p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 15px;
+}
+
+.item-info .subtotal {
+    font-weight: 700;
+    color: #28a745;
+    font-size: 16px;
+}
+
+/* Acciones del item */
+.item-acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-acciones button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #007bff;
+    color: white;
+}
+
+.item-acciones button:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+}
+
+.item-acciones .btn-eliminar {
+    background: #dc3545;
+    font-size: 16px;
+}
+
+.item-acciones .btn-eliminar:hover {
+    background: #c82333;
+}
+
+.item-acciones span {
+    font-weight: 700;
+    font-size: 18px;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Resumen y confirmación */
+.carrito-resumen {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.datos-cliente {
+    margin-bottom: 25px;
+}
+
+.datos-cliente label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.datos-cliente input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.datos-cliente input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.total-container {
+    padding: 20px 0;
+    border-top: 2px solid #e9ecef;
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 25px;
+}
+
+.total-container h2 {
+    margin: 0;
+    color: #333;
+    font-size: 28px;
+    text-align: right;
+}
+
+.total-container span {
+    color: #28a745;
+}
+
+/* Botones de acción */
+.carrito-acciones {
+    display: flex;
+    gap: 15px;
+}
+
+.carrito-acciones button {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-vaciar {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-vaciar:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+.btn-confirmar {
+    background: #28a745;
+    color: white;
+}
+
+.btn-confirmar:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+/* ===================================
+   BOTÓN VOLVER
+   =================================== */
+
+.btn-volver {
+    background: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-volver:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .carrito-container {
+        padding: 15px;
+    }
+
+    .carrito-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .carrito-header h1 {
+        font-size: 24px;
+    }
+
+    .carrito-item {
+        grid-template-columns: 80px 1fr;
+        gap: 15px;
+    }
+
+    .carrito-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .item-acciones {
+        grid-column: 1 / -1;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .carrito-acciones {
+        flex-direction: column;
+    }
+
+    .carrito-acciones button {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
 /* =========================================================
     PANTALLA CAJERO
 ========================================================= */

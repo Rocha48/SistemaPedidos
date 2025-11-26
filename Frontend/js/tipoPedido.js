@@ -8,7 +8,7 @@
     localStorage.removeItem("mesaSeleccionada");
 
     if (tipo === "local") {
-        // Ir a seleccionar mesa
+        
         window.location.href = "../totem/mesa.html";
     } 
     else {
