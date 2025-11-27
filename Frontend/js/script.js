@@ -62,6 +62,18 @@ function seleccionarMesaTotem(numMesa, boton) {
 
     const btnContinuar = document.getElementById("btnContinuar");
     if (btnContinuar) btnContinuar.disabled = false;
+
+    // Agregar texto de confirmación
+    const pedidoBox = document.querySelector('.screen-mesas .pedido-box');
+    let mensajeSeleccion = pedidoBox.querySelector('.mensaje-mesa-seleccionada');
+    
+    if (!mensajeSeleccion) {
+        mensajeSeleccion = document.createElement('p');
+        mensajeSeleccion.className = 'mensaje-mesa-seleccionada';
+        pedidoBox.appendChild(mensajeSeleccion);
+    }
+    
+    mensajeSeleccion.textContent = `Mesa #${numMesa} seleccionada`;  // ← CAMBIO AQUÍ
 }
 
 function confirmarMesa() {
@@ -78,6 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
         cargarMesasTotem();
     }
 });
+
+
+
 
 /* ======================================================
    CATEGORÍAS Y PRODUCTOS (TÓTEM) - CONEXIÓN REAL API
@@ -172,6 +187,7 @@ function cargarSugerencias() {
 }
 
 /* CARD DE PRODUCTO */
+/* CARD DE PRODUCTO */
 function crearCardProducto(prod) {
     const nombre = prod.nombre;
     const precio = prod.precio;
@@ -184,10 +200,13 @@ function crearCardProducto(prod) {
 
     const rutaImagen = `../Frontend/img/${imagen.split('/').pop()}`;
 
+    // ESTRUCTURA CORRECTA CON item-info y clase precio
     div.innerHTML = `
         <img src="${rutaImagen}" alt="${nombre}">
-        <h3>${nombre}</h3>
-        <p>$${precio}</p>
+        <div class="item-info">
+            <h3>${nombre}</h3>
+            <p class="precio">$${precio}</p>
+        </div>
     `;
 
     div.onclick = () => {
@@ -232,11 +251,9 @@ function toggleSidebar() {
     overlay.classList.toggle("activo");
 }
 
-/* =======================================
-   DETALLE DEL PRODUCTO (BACKEND REAL)
-   ======================================= */
 
 
+   
 // -----------------------------
 // ABRIR CARRITO DESDE EL MENU
 // -----------------------------

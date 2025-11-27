@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 alert(`✅ ¡Pedido confirmado!\n\nPedido Nº ${data.idPedido || data.IdPedido || "N/A"}\nTotal: $${total.toFixed(2)}\n\n¡Gracias, ${nombreCliente}!`);
                 
-                window.location.href = "menu.html";
+                window.location.href = "pago.html";
 
             } catch (err) {
                 console.error("❌ Error al enviar el pedido:", err);

@@ -1,0 +1,193 @@
+
+ 
+
+/* ------------------------------
+   PANTALLA PAGO
+   ------------------------------ */
+
+body.pantalla-pago {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.pago-contenedor {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+}
+
+.titulo-pago {
+    font-size: 2rem;
+    margin-bottom: 25px;
+}
+
+/* OPCIONES DE PAGO */
+.opciones-pago {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.opcion-pago {
+    background: #ffec99;
+    padding: 20px;
+    width: 150px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    transition: 0.2s;
+}
+
+    .opcion-pago img {
+        width: 70px;
+        margin-bottom: 10px;
+    }
+
+    .opcion-pago:hover {
+        transform: scale(1.07);
+    }
+
+
+
+
+/* ============================
+   MODALES DE PAGO... TARJETA Y QR
+============================= */
+
+.modal-general {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+.modal-contenido {
+    background: white;
+    padding: 25px;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.modal-texto {
+    font-size: 1.2rem;
+    margin: 15px 0;
+}
+
+.tarjetas-aceptadas img {
+    width: 60px;
+    margin: 10px;
+}
+
+.qr-imagen {
+    width: 200px;
+    margin: 20px 0;
+}
+
+.modal-imagen {
+    width: 150px;
+    margin-top: 20px;
+}
+
+.lista-modal {
+    text-align: left;
+    margin: 10px auto;
+    max-width: 300px;
+}
+
+.modal-botones {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-modal-sec {
+    padding: 12px 20px;
+    background: #ccc;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-modal-ok {
+    padding: 12px 20px;
+    background: #ffcc00;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.oculto {
+    display: none;
+}
+
+
+
+
+/* ==============================
+   PAGO — TOTAL
+================================= */
+.pago-total {
+    background: #fff3b0;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* ==============================
+   PAGO — OPCIÓN SELECCIONADA
+================================= */
+.opcion-pago.pago-activo {
+    border: 3px solid #ffcc00;
+    transform: scale(1.1);
+}
+
+/* ==============================
+   PAGO — BOTÓN CONFIRMAR
+================================= */
+.btn-confirmar-pago {
+    margin-top: 35px;
+    padding: 18px;
+    width: 100%;
+    background: #ffcc00;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .btn-confirmar-pago:hover:not([disabled]) {
+        transform: scale(1.05);
+    }
+
+    .btn-confirmar-pago:disabled {
+        background: #d9d9d9;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+
+
+@media (max-width: 480px) {
+    .opciones-pago {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .opcion-pago {
+        width: 100%;
+    }
+}
+

@@ -4,17 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú</title>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/menu.css">
 </head>
 
 <body class="menu-body pantalla-menu">
 
     <!-- HEADER SUPERIOR -->
-    <header class="menu-header">
-        <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
-        <h1 class="logo-menu">🍔 Menú</h1>
-        <button class="btn-carrito" onclick="abrirCarrito()">🛒</button>
-    </header>
+    <!-- BOTONES FLOTANTES (FUERA DEL HEADER) -->
+    <button class="hamburger-btn" onclick="toggleSidebar()">.</button>
+    <button class="btn-carrito" onclick="abrirCarrito()">.</button>
 
     <!-- OVERLAY OSCURO -->
     <div id="sidebar-overlay" class="sidebar-overlay"></div>
@@ -28,13 +26,21 @@
     <!-- CONTENIDO PRINCIPAL -->
     <main class="menu-content">
 
+        <!-- TÍTULO -->
+        <h2 class="titulo-menu">Menú</h2>
+        <p class="linea-separacion"> ------ </p>
+        <p class="subtitulo-menu">
+            Descubre todos nuestros productos<br>
+            y agrega los que quieras al carrito para realizar tu pedido fácilmente.
+        </p>
+
+
+        
+
         <!-- BANNER PRINCIPAL -->
         <div class="banner-principal">
-            <img src="../img/banner.jpg" alt="Promoción del día" class="banner-img">
+            <img src="../img/banner.png" alt="Promoción del día" class="banner-img">
         </div>
-
-        <!-- SUGERENCIAS -->
-      
 
         <!-- TODOS LOS PRODUCTOS -->
         <section>
@@ -47,15 +53,12 @@
     <script src="../js/script.js"></script>
 
     <script>
-    // Click en overlay para cerrar
     document.getElementById('sidebar-overlay').addEventListener('click', cerrarSidebar);
-    
-    // ESC para cerrar
+
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') cerrarSidebar();
     });
-</script>
-
+    </script>
 
 </body>
 </html>

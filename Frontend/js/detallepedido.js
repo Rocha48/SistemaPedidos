@@ -74,7 +74,6 @@ function filtrarPorCategoria(categoria) {
 
     cargarProductos(categoria);
 }
-
 // =========================================
 //   DETALLE DEL PRODUCTO
 // =========================================
@@ -97,8 +96,22 @@ async function cargarDetalle() {
         document.getElementById('detalle-precio').textContent = producto.precio;
         document.getElementById('detalle-img').src = producto.imagenURL || '../img/default.jpg';
 
-        // Botón agregar al pedido
-        document.getElementById('btn-agregar').onclick = () => agregarAlCarrito(producto);
+        // Botón agregar al pedido CON EFECTO VERDE
+        const btnAgregar = document.getElementById('btn-agregar');
+        btnAgregar.onclick = () => {
+            agregarAlCarrito(producto);
+            
+            // Cambiar a verde
+            btnAgregar.classList.add('agregado');
+            const textoOriginal = btnAgregar.textContent;
+            btnAgregar.textContent = '¡Agregado!';
+            
+            // Volver a normal después de 2 segundos
+            setTimeout(() => {
+                btnAgregar.classList.remove('agregado');
+                btnAgregar.textContent = textoOriginal;
+            }, 2000);
+        };
 
     } catch (error) {
         console.error('Error cargando detalle:', error);
@@ -182,7 +195,7 @@ function agregarAlCarrito(producto) {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 
     // Mostrar mensaje
-    alert(`✓ ${producto.nombre} agregado al pedido`);
+    
 
     // Resetear cantidad
     cantidad = 1;

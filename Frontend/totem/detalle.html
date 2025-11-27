@@ -4,36 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Producto</title>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/detalle.css">
 </head>
 
 <body class="pantalla-detalle">
 
+    <h1 class="titulo-detalle-pedido">Detalle del producto</h1>
+
     <div class="detalle-contenedor">
 
         <!-- Botón para volver al menú -->
-        <a href="menu.html" class="btn-volver">← Volver</a>
 
-        <!-- Imagen del producto -->
-        <img id="detalle-img" class="detalle-img" src="" alt="Producto">
+            <a href="menu.html" class="btn-volvermenu">← Volver</a>
 
-        <!-- Texto del producto -->
-        <h1 id="detalle-nombre"></h1>
-        <p id="detalle-descripcion"></p>
-        <p class="detalle-precio">Precio: $<span id="detalle-precio"></span></p>
+            <img id="detalle-img" class="detalle-img" src="" alt="Producto">
 
-        <!-- Cantidad -->
-        <div class="cantidad-container">
-            <button id="btn-restar" class="btn-cantidad">–</button>
-            <span id="cantidad">1</span>
-            <button id="btn-sumar" class="btn-cantidad">+</button>
-        </div>
+            <!-- NOMBRE -->
+            <h1 id="detalle-nombre" class="detalle-nombre"></h1>
+
+            <!-- PRECIO -->
+            <div class="bloque-precio">
+                <p class="precio-label">Precio</p>
+                <p class="precio-grande">$<span id="detalle-precio"></span></p>
+            </div>
+
+            <!-- DESCRIPCION -->
+            <div class="bloque-descripcion">
+                <p class="descripcion-label">Descripción</p>
+                <p id="detalle-descripcion"></p>
+            </div>
 
 
-        <!-- Botón agregar al carrito -->
-        <button id="btn-agregar" class="btn-agregar">Agregar al pedido</button>
+            <div class="zona-acciones">
+    
+                <!-- CANTIDAD -->
+
+            <div class="cantidad-container">
+                <button id="btn-restar" class="btn-cantidad">–</button>
+                <span id="cantidad">1</span>
+                <button id="btn-sumar" class="btn-cantidad">+</button>
+            </div>
+       
+            <!-- BOTON AGREGAR -->
+         <button id="btn-agregar" class="btn-añadir">Agregar al pedido</button>
 
     </div>
+
+
+</div>
 
     <script src="../js/detallepedido.js"></script>
 </body>

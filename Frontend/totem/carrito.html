@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito - Mi Pedido</title>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/carrito.css">
 </head>
 
 <body class="pantalla-carrito">
@@ -52,16 +52,25 @@
             </small>
         </div>
 
-        <!-- Total del pedido -->
-        <div class="carrito-total">
-            <span>Total:</span>
-            <strong>$<span id="total-precio">0.00</span></strong>
-        </div>
 
-        <!-- Botón confirmar -->
-        <button class="btn-confirmar" id="btn-confirmar">
-            ✅ Confirmar pedido
-        </button>
+
+       <!-- RESUMEN STICKY (COLUMNA DERECHA) -->
+        <div class="carrito-resumen">
+            <h2>Resumen</h2>
+            <div class="resumen-detalle">
+                <div class="resumen-item">
+                    <span>Productos:</span>
+                    <span id="resumen-cantidad">0</span>
+                </div>
+                <div class="resumen-item total">
+                    <span>TOTAL A PAGAR</span>
+                    <span class="precio-total">$<span id="total-precio">0</span></span>
+                </div>
+            </div>
+            <button class="btn-confirmar" id="btn-confirmar">
+                ✅ Confirmar Pedido
+            </button>
+        </div>
 
     </div>
 

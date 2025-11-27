@@ -1,0 +1,1576 @@
+
+/*****************************************************/
+/*************** LOGIN DEL ADMINISTRADOR *************/
+/*****************************************************/
+
+
+.login-container {
+    background: #f5f5f5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background: #ffffff;
+    padding: 40px;
+    width: 90%;
+    max-width: 380px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.login-title {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #333;
+    font-weight: bold;
+}
+
+.login-input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background: #f86a28;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.15s;
+}
+
+    .login-btn:hover {
+        transform: scale(1.03);
+    }
+
+.login-error {
+    color: red;
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+
+
+
+    .admin-btn:hover {
+        background: #2d7fb8;
+    }
+
+.btn-logout {
+    background: #e74c3c;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+    .btn-logout:hover {
+        background: #c0392b;
+    }
+
+
+
+/* =========================================
+   LAYOUT GENERAL DEL ADMIN
+========================================= */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #f1f3f5; /* gris suave */
+    font-family: Arial, sans-serif;
+}
+
+
+
+
+
+/* ================================
+   PANEL ADMIN – NUEVO DISEÑO
+================================ */
+
+.admin-panel-body {
+    display: flex;
+    background: #cbced7;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* SIDEBAR */
+.admin-sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #2c3e50 0%, #95a5a6 100%);
+    padding: 25px 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-user {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-user-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    margin: auto;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+    .sidebar-nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        padding: 10px 5px;
+        border-radius: 8px;
+        transition: 0.2s;
+    }
+
+        .sidebar-nav a:hover {
+            background: #2e3b4e;
+        }
+
+.sidebar-logout {
+    background: linear-gradient(135deg, #3d4f63 0%, #2c3e50 100%);
+    color: white;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+    .sidebar-logout:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+/* MAIN AREA */
+.admin-main {
+    flex: 1;
+    padding: 35px;
+    background: #cbced7;
+}
+
+.admin-main-title {
+    font-size: 32px;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* CARDS */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    transition: 0.25s;
+}
+
+    .admin-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 18px rgba(0,0,0,0.25);
+    }
+
+.admin-card-img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        display: none;
+    }
+
+    .admin-panel-body {
+        display: block;
+    }
+
+    .admin-main {
+        padding: 15px;
+    }
+
+    .admin-card {
+        padding: 18px;
+    }
+}
+
+
+/* MODAL LOGOUT ADMIN_PANEL */
+.modal-logout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+    .modal-logout.oculto {
+        display: none;
+    }
+
+.modal-content-logout {
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* CONTENEDOR DE BOTONES */
+.modal-btns {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px; /* Espacio uniforme */
+}
+
+    /* BOTONES UNIFICADOS */
+    .modal-btns button {
+        flex: 1; /* MISMO ANCHO */
+        padding: 12px 0; /* MISMA ALTURA */
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.15s ease;
+    }
+
+/* Botón confirmar */
+.btn-confirmar {
+    background: #e74c3c;
+    color: white;
+}
+
+    .btn-confirmar:hover {
+        background: #c0392b;
+    }
+
+/* Botón cancelar */
+.btn-cancelar {
+    background: #bdc3c7;
+    color: #2c3e50;
+}
+
+    .btn-cancelar:hover {
+        background: #95a5a6;
+    }
+
+
+/* BOTÓN MENÚ MÓVIL ADMIN_PANEL */
+.menu-mobile-btn {
+    display: none;
+    background: #3a4b63;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* SIDEBAR MÓVIL */
+.sidebar-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100%;
+    background: #3a4b63;
+    color: white;
+    padding: 25px 20px;
+    z-index: 9999;
+    transform: translateX(-100%);
+    transition: 0.3s ease-in-out;
+}
+
+    .sidebar-mobile.activo {
+        transform: translateX(0);
+    }
+
+    .sidebar-mobile.oculto {
+        display: block; /* necesario para la transición */
+    }
+
+/* RESPONSIVE FINAL */
+@media (max-width: 768px) {
+
+    .admin-sidebar {
+        display: none !important;
+    }
+
+    .menu-mobile-btn {
+        display: block;
+    }
+
+    .admin-card-img {
+        display: none;
+    }
+
+    .admin-card {
+        padding: 15px;
+        font-size: 16px;
+    }
+}
+
+/* ============================
+   ADMIN PLATOS - HEADER
+============================ */
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+    .admin-header h1 {
+        font-size: 28px;
+        color: #333;
+        margin: 0;
+    }
+
+.btn-volver {
+    background: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+    .btn-volver:hover {
+        background: #7f8c8d;
+    }
+
+
+
+/* ===================================
+   CONFIRMACIÓN MEJORADA
+   =================================== */
+.pedido-info-box {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px solid #e0e0e0;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #666;
+    font-size: 1rem;
+}
+
+.info-value {
+    font-weight: 700;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.codigo-pedido-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 30px;
+    margin: 30px 0;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.codigo-label {
+    color: rgba(255,255,255,0.9);
+    font-size: 1rem;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.codigo-numero {
+    color: white;
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 10px 0;
+    letter-spacing: 5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.codigo-instruccion {
+    color: rgba(255,255,255,0.9);
+    font-size: 0.9rem;
+    margin: 10px 0 0 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .codigo-numero {
+        font-size: 2.5rem;
+        letter-spacing: 3px;
+    }
+}
+
+
+/* ============================
+   ADMIN - GESTIÓN DE MESAS
+============================ */
+
+.mesas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-agregar-mesa {
+    background: #28a745;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-agregar-mesa:hover {
+    background: #218838;
+}
+
+.mesas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.mesa-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.mesa-numero {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.mesa-estado {
+    margin: 8px 0;
+    font-weight: bold;
+}
+
+.mesa-estado.libre {
+    color: #27ae60;
+}
+
+.mesa-estado.ocupada {
+    color: #c0392b;
+}
+
+.btn-editar-mesa,
+.btn-eliminar-mesa {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.btn-editar-mesa {
+    background: #3498db;
+    color: white;
+}
+
+.btn-eliminar-mesa {
+    background: #e74c3c;
+    color: white;
+}
+
+
+
+
+
+
+/* ===================================
+   GESTIÓN DE MESAS - ESTILOS
+   =================================== */
+
+.admin-mesas-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.mesas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.mesas-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 24px;
+}
+
+.btn-agregar-mesa {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+}
+
+.btn-agregar-mesa:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+/* ===================================
+   GRID DE MESAS
+   =================================== */
+
+.mesas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.mesa-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.mesa-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border-color: #007bff;
+}
+
+.mesa-card h3 {
+    margin: 0 0 16px 0;
+    color: #007bff;
+    font-size: 22px;
+    font-weight: 700;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 12px;
+}
+
+.mesa-card p {
+    margin: 10px 0;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.mesa-card p strong {
+    color: #333;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 100px;
+}
+
+.mesa-card-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn-editar,
+.btn-eliminar {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-editar {
+    background: #ffc107;
+    color: #333;
+    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.3);
+}
+
+.btn-editar:hover {
+    background: #e0a800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+}
+
+.btn-eliminar {
+    background: #dc3545;
+    color: white;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+}
+
+.btn-eliminar:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+}
+
+/* ===================================
+   MODAL DE MESAS
+   =================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.open {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    margin: 0 0 30px 0;
+    color: #333;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #007bff;
+}
+
+.modal-content label {
+    display: block;
+    margin: 20px 0 8px 0;
+    color: #555;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="number"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.modal-content label input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.modal-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.modal-btns button {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#btnGuardarMesa {
+    background: #28a745;
+    color: white;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+#btnGuardarMesa:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+.btn-limpiar {
+    background: #17a2b8;
+    color: white;
+    box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+}
+
+.btn-limpiar:hover {
+    background: #138496;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.4);
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .mesas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mesas-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .modal-content {
+        padding: 30px 20px;
+        width: 95%;
+    }
+
+    .modal-btns {
+        flex-direction: column;
+    }
+
+    .modal-btns button {
+        width: 100%;
+    }
+}
+
+/* ===================================
+   GESTIÓN DE CATEGORÍAS Y PLATOS
+   =================================== */
+
+.admin-categorias-container,
+.admin-platos-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 30px;
+}
+
+/* ===================================
+   FORMULARIOS
+   =================================== */
+
+.card-form {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.card-form h2 {
+    margin: 0 0 25px 0;
+    color: #333;
+    font-size: 24px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #007bff;
+}
+
+.card-form input[type="text"],
+.card-form input[type="number"],
+.card-form select {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.card-form input[type="text"]:focus,
+.card-form input[type="number"]:focus,
+.card-form select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.card-form label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+}
+
+.card-form input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.card-form button {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#btn-guardar,
+#btn-guardar-plato {
+    background: #28a745;
+    color: white;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+#btn-guardar:hover,
+#btn-guardar-plato:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+.btn-secundario,
+#btn-cancelar-plato {
+    background: #6c757d;
+    color: white;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secundario:hover,
+#btn-cancelar-plato:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+.btn-limpiar {
+    background: #17a2b8;
+    color: white;
+    box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+}
+
+.btn-limpiar:hover {
+    background: #138496;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.4);
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* ===================================
+   LISTADOS - TABLAS
+   =================================== */
+
+.card-lista {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+.card-lista h2 {
+    margin: 0 0 25px 0;
+    color: #333;
+    font-size: 24px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #007bff;
+}
+
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.tabla-admin thead {
+    background: #f8f9fa;
+}
+
+.tabla-admin thead th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 700;
+    color: #333;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.tabla-admin tbody tr {
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.tabla-admin tbody tr:hover {
+    background: #f8f9fa;
+    transform: scale(1.01);
+}
+
+.tabla-admin tbody td {
+    padding: 14px 16px;
+    color: #555;
+    vertical-align: middle;
+}
+
+/* ===================================
+   BOTONES EN TABLAS
+   =================================== */
+
+.tabla-admin button {
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tabla-admin .btn-editar {
+    background: #ffc107;
+    color: #333;
+    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.3);
+}
+
+.tabla-admin .btn-editar:hover {
+    background: #e0a800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+}
+
+.tabla-admin .btn-eliminar {
+    background: #dc3545;
+    color: white;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+}
+
+.tabla-admin .btn-eliminar:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+}
+
+/* Asegurar que los botones sin clase también sean consistentes */
+.tabla-admin td button {
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Si el botón tiene el emoji ✏, es editar */
+.tabla-admin td button:first-child,
+.tabla-admin button[onclick*="editar"] {
+    background: #ffc107 !important;
+    color: #333 !important;
+    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.3);
+}
+
+.tabla-admin td button:first-child:hover,
+.tabla-admin button[onclick*="editar"]:hover {
+    background: #e0a800 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+}
+
+/* Si el botón tiene el emoji 🗑 o ❌, es eliminar */
+.tabla-admin td button:last-child,
+.tabla-admin button[onclick*="eliminar"] {
+    background: #dc3545 !important;
+    color: white !important;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+}
+
+.tabla-admin td button:last-child:hover,
+.tabla-admin button[onclick*="eliminar"]:hover {
+    background: #c82333 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 1024px) {
+    .admin-categorias-container,
+    .admin-platos-container {
+        grid-template-columns: 1fr;
+    }
+
+    .card-form {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-categorias-container,
+    .admin-platos-container {
+        padding: 15px;
+    }
+
+    .card-form,
+    .card-lista {
+        padding: 20px;
+    }
+
+    .card-form h2,
+    .card-lista h2 {
+        font-size: 20px;
+    }
+
+    .tabla-admin {
+        font-size: 14px;
+    }
+
+    .tabla-admin thead th,
+    .tabla-admin tbody td {
+        padding: 10px 12px;
+    }
+
+    .tabla-admin button {
+        padding: 6px 12px;
+        font-size: 13px;
+        margin: 2px;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Para móviles muy chicos, hacer la tabla scrolleable */
+    .card-lista {
+        padding: 15px;
+        overflow-x: auto;
+    }
+
+    .tabla-admin {
+        min-width: 600px;
+    }
+
+    .tabla-admin button {
+        display: block;
+        width: 100%;
+        margin: 4px 0;
+    }
+}
+
+
+
+.admin-usuarios-body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.usuarios-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+
+.usuarios-header {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.usuarios-header h1 {
+    margin: 0;
+    color: #333;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.btn-volver {
+    background: #6c757d;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.btn-volver:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+/* ===================================
+   CONTENEDOR PRINCIPAL
+   =================================== */
+
+.usuarios-contenedor {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.usuarios-acciones {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 25px;
+}
+
+.btn-agregar {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.btn-agregar:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+/* ===================================
+   TABLA DE USUARIOS
+   =================================== */
+
+.tabla-wrapper {
+    overflow-x: auto;
+}
+
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.tabla-usuarios thead {
+    background: #f8f9fa;
+}
+
+.tabla-usuarios thead th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 700;
+    color: #333;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.tabla-usuarios tbody tr {
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.tabla-usuarios tbody tr:hover {
+    background: #f8f9fa;
+    transform: scale(1.01);
+}
+
+.tabla-usuarios tbody td {
+    padding: 14px 16px;
+    color: #555;
+    vertical-align: middle;
+}
+
+/* Botones en la tabla */
+.tabla-usuarios button {
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Botón Editar (✏) */
+.tabla-usuarios button[onclick*="editar"] {
+    background: #ffc107;
+    color: #333;
+    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.3);
+}
+
+.tabla-usuarios button[onclick*="editar"]:hover {
+    background: #e0a800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+}
+
+/* Botón Eliminar (❌ o 🗑) */
+.tabla-usuarios button[onclick*="eliminar"] {
+    background: #dc3545;
+    color: white;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+}
+
+.tabla-usuarios button[onclick*="eliminar"]:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+}
+
+/* ===================================
+   MODAL DE USUARIO
+   =================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+.modal[style*="block"] {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    margin: 0 0 30px 0;
+    color: #333;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #007bff;
+}
+
+.modal-content label {
+    display: block;
+    margin: 20px 0 8px 0;
+    color: #555;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"],
+.modal-content select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.modal-botones {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.modal-botones button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-guardar {
+    background: #28a745;
+    color: white;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.btn-guardar:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+.btn-cerrar {
+    background: #6c757d;
+    color: white;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.btn-cerrar:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .usuarios-wrapper {
+        padding: 15px;
+    }
+
+    .usuarios-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .usuarios-header h1 {
+        font-size: 24px;
+    }
+
+    .usuarios-contenedor {
+        padding: 20px;
+    }
+
+    .modal-content {
+        padding: 30px 20px;
+        width: 95%;
+    }
+
+    .modal-botones {
+        flex-direction: column;
+    }
+
+    .tabla-usuarios {
+        font-size: 14px;
+    }
+
+    .tabla-usuarios thead th,
+    .tabla-usuarios tbody td {
+        padding: 10px 12px;
+    }
+
+    .tabla-usuarios button {
+        padding: 6px 12px;
+        font-size: 13px;
+        display: block;
+        width: 100%;
+        margin: 4px 0;
+    }
+}
+
