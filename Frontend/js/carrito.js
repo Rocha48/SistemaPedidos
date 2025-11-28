@@ -37,10 +37,16 @@ function cargarCarrito() {
         const subtotal = item.precio * item.cantidad;
         total += subtotal;
 
+        // CORRECCIÓN: Procesar la ruta de la imagen correctamente
+        const imagenURL = item.imagenURL || item.img || 'default.jpg';
+        const rutaImagen = imagenURL.startsWith('http') 
+            ? imagenURL 
+            : `../${imagenURL}`;
+
         const div = document.createElement("div");
         div.className = "carrito-item";
         div.innerHTML = `
-            <img src="${item.imagenURL || item.img || '../img/default.jpg'}" alt="${item.nombre}">
+            <img src="${rutaImagen}" alt="${item.nombre}">
             <div class="carrito-info">
                 <h3>${item.nombre}</h3>
                 <p>$${item.precio.toFixed(2)} c/u</p>
@@ -58,7 +64,6 @@ function cargarCarrito() {
     totalPrecio.textContent = total.toFixed(2);
     agregarEventListeners();
 }
-
 // ====================
 // Botones +, −, X
 // ====================

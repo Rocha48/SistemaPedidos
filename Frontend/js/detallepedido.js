@@ -94,7 +94,10 @@ async function cargarDetalle() {
         document.getElementById('detalle-nombre').textContent = producto.nombre;
         document.getElementById('detalle-descripcion').textContent = producto.descripcion || 'Sin descripción';
         document.getElementById('detalle-precio').textContent = producto.precio;
-        document.getElementById('detalle-img').src = producto.imagenURL || '../img/default.jpg';
+        const rutaImagen = producto.imagenURL 
+    ? `../${producto.imagenURL}` 
+    : '../img/default.jpg';
+document.getElementById('detalle-img').src = rutaImagen;
 
         // Botón agregar al pedido CON EFECTO VERDE
         const btnAgregar = document.getElementById('btn-agregar');

@@ -186,7 +186,7 @@ function cargarSugerencias() {
         .forEach(prod => contenedor.appendChild(crearCardProducto(prod)));
 }
 
-/* CARD DE PRODUCTO */
+
 /* CARD DE PRODUCTO */
 function crearCardProducto(prod) {
     const nombre = prod.nombre;
@@ -198,9 +198,9 @@ function crearCardProducto(prod) {
     const div = document.createElement("div");
     div.className = "item-card";
 
-    const rutaImagen = `../Frontend/img/${imagen.split('/').pop()}`;
+    // CORRECCIÓN: Quitar "Frontend/" de la ruta
+    const rutaImagen = `../img/${imagen.split('/').pop()}`;
 
-    // ESTRUCTURA CORRECTA CON item-info y clase precio
     div.innerHTML = `
         <img src="${rutaImagen}" alt="${nombre}">
         <div class="item-info">
@@ -215,7 +215,6 @@ function crearCardProducto(prod) {
 
     return div;
 }
-
 /* FILTRAR */
 function filtrarPorCategoria(nombreCategoria) {
     const contenedor = document.getElementById("lista-productos");
