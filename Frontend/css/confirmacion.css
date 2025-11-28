@@ -1,0 +1,370 @@
+/* ------------------------------
+   PANTALLA CONFIRMACIÓN - DISEÑO COMPLETO
+   ------------------------------ */
+
+/* AJUSTE CRÍTICO: Aplicar border-box a todos los elementos */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body.pantalla-confirmacion {
+    background-color: #FFF5EB;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 35px,
+            rgba(255, 255, 255, 0.4) 35px,
+            rgba(255, 255, 255, 0.4) 70px
+        );
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmacion-contenedor {
+    /* AJUSTE: Reducción de ancho y padding para eliminar scroll y compactar */
+    max-width: 1000px; 
+    width: 95%; 
+    background: white;
+    padding: 25px 20px; 
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    max-height: 95vh;
+    overflow-y: auto; 
+    
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+}
+
+/* ====================================================
+   ESTILOS DEL ENCABEZADO (Icono + Título/Subtítulo)
+   ==================================================== */
+.header-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    justify-content: center; 
+}
+
+/* ÍCONO DE ÉXITO */
+.icono-exito {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+@keyframes aparecer {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.img-exito {
+    width: 95px;      /* equivalente a 3.5rem aproximadamente */
+    height: auto;
+    display: block;
+    animation: aparecer 0.5s ease-in-out;
+    filter: drop-shadow(0 0 5px rgba(255, 107, 74, 0.5));
+}
+
+
+.header-text {
+    text-align: center;
+}
+
+.confirmacion-contenedor h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #FF6B4A;
+    margin: 0;
+    text-align: center;
+}
+
+.confirmacion-contenedor > p:first-of-type {
+    font-size: 1.1rem; 
+    color: #333;
+    margin: 0;
+    text-align: center;
+}
+
+/* ====================================================
+   ESTILOS DE CÓDIGO Y CONTADOR (Elementos a Ancho Completo)
+   ==================================================== */
+
+/* CÓDIGO DE PEDIDO (Elemento llamativo, degradé + sombra) */
+.codigo-pedido-box {
+    background: linear-gradient(90deg, #FF6B4A, #FF8C42, #FF6B4A);
+    padding: 10px 20px; 
+    border-radius: 15px;
+    margin: 15px 0; 
+    color: white;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(255, 107, 74, 0.5); 
+}
+
+.codigo-pedido-box h2 {
+    font-size: 1.1rem; 
+    margin: 0 0 5px 0;
+    font-weight: 600;
+}
+
+#codigo-pedido {
+    font-size: 3rem; 
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+/* CONTADOR DE REDIRECCIÓN */
+.contador-redireccion {
+    background: #FFF5EB; 
+    padding: 10px; 
+    border-radius: 10px;
+    width: 100%; 
+    margin: 0 0 20px 0; 
+    border: 2px solid #FF8C42; 
+    text-align: center;
+}
+
+.contador-redireccion p {
+    margin: 0;
+    color: #FF6B4A; 
+    font-size: 0.95rem; 
+}
+
+#contador {
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: #FF6B4A; 
+}
+
+/* ====================================================
+   ESTILOS DE COLUMNAS (DETALLES Y PRODUCTOS/TICKET)
+   ==================================================== */
+.column-wrapper {
+    display: flex;
+    gap: 10px; 
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.columna-izquierda {
+    width: calc(50% - 5px); 
+    display: flex;
+    flex-direction: column; 
+}
+
+.columna-derecha {
+    width: calc(50% - 5px); 
+    display: flex;
+    flex-direction: column; 
+}
+
+/* DETALLES DEL PEDIDO (Columna Izquierda) */
+.detalles-pedido {
+    background: #FFF5EB;
+    /* AJUSTE: Reducción de padding para más margen */
+    padding: 15px; 
+    border-radius: 15px;
+    margin: 0; 
+    text-align: left;
+    height: min-content;
+}
+
+.detalles-pedido h3 {
+    font-size: 1.3rem;
+    color: #FF6B4A;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.detalle-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #FFE5D9;
+}
+
+.detalle-item:last-child {
+    border-bottom: none;
+}
+
+.detalle-label {
+    font-weight: 700;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.detalle-valor {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* PRODUCTOS Y TICKETS (Columna Derecha) */
+.productos-lista {
+    background: #F9F9F9;
+    /* AJUSTE: Reducción de padding y margin para despegue */
+    padding: 10px 10px; 
+    border-radius: 10px;
+    margin-bottom: 10px; /* Reducido */
+    width: 100%; 
+    text-align: left;
+}
+
+.productos-lista strong {
+    font-size: 0.95rem;
+}
+
+.productos-lista ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.productos-lista li {
+    padding: 8px 0;
+    color: #333;
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 0.95rem;
+}
+
+.productos-lista li:last-child {
+    border-bottom: none;
+}
+
+/* OBSERVACIONES */
+#observaciones-box {
+    background: #FFF5EB; 
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px; /* Reducido */
+    width: 100%;
+    border-left: 4px solid #FF6B4A; 
+}
+
+#observaciones-box strong {
+    color: #FF6B4A; 
+}
+
+#observaciones-confirmacion {
+    color: #333;
+    margin: 10px 0 0 0;
+    font-size: 0.95rem;
+}
+
+/* INSTRUCCIÓN TICKET */
+.instruccion-ticket {
+    background: #FFF5EB; 
+    /* AJUSTE: Reducción de padding y margin para despegue */
+    padding: 10px 10px; 
+    border-radius: 12px;
+    width: 100%; 
+    margin-bottom: 0;
+    border-left: 4px solid #FF8C42; 
+}
+
+.instruccion-ticket p {
+    margin: 0;
+    color: #995033; 
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* BOTÓN VOLVER (Opcional) */
+.btn-volver-inicio {
+    display: inline-block;
+    padding: 14px 30px;
+    background: linear-gradient(135deg, #FF8C42, #FF6B4A);
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 107, 74, 0.3);
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-volver-inicio:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 74, 0.4);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .confirmacion-contenedor {
+        padding: 40px 25px;
+        width: 95%;
+    }
+    
+    .header-info {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .icono-exito {
+        margin: 0 0 10px 0;
+        font-size: 5rem;
+    }
+    
+    .header-text {
+        text-align: center;
+    }
+
+    .confirmacion-contenedor h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    .confirmacion-contenedor > p:first-of-type {
+        font-size: 1.2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .column-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .columna-izquierda,
+    .columna-derecha {
+        width: 100%;
+    }
+    
+    .productos-lista, #observaciones-box, .instruccion-ticket {
+        width: 100%;
+    }
+    
+    .contador-redireccion {
+        margin: 20px 0;
+    }
+
+    .detalle-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

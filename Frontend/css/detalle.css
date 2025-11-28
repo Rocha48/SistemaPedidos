@@ -210,10 +210,10 @@ body.pantalla-detalle {
 /* BOTÓN AGREGAR */
 .btn-añadir {
     width: auto;
-    padding: 21px 20px;
+    padding: 21px 29px;
     background-image:
         url("../img/carrito2.png"),
-        linear-gradient(135deg, #FF6B4A, #FF3366);
+        linear-gradient(90deg, #FF6B4A, #FF8C42, #FF6B4A);
 
     background-size: 28px, cover;  /* Tamaño del ícono */
     background-repeat: no-repeat;

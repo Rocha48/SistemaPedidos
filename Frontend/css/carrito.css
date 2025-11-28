@@ -26,7 +26,7 @@ body.pantalla-carrito {
     gap: 8px;
     text-decoration: none;
     color: #FFFFFF;
-    background: linear-gradient(135deg, #FF6B4A, #FF3366);
+    background: linear-gradient(90deg, #FF6B4A, #FF8C42, #FF6B4A);
     padding: 14px 28px;
     border-radius: 30px;
     font-size: 1rem;
@@ -59,9 +59,11 @@ body.pantalla-carrito {
 
 /* TÍTULO "TU PEDIDO" - CENTRADO */
 .titulo-carrito {
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: #333;
+    font-size: 3.7rem;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 900;
+    color: #FF6B4A;
+    font-weight: bold;
     margin: 0 0 5px 0;
     text-align: center;
     grid-column: 1;
@@ -70,11 +72,19 @@ body.pantalla-carrito {
 .titulo-carrito::after {
     content: 'Personaliza tu orden';
     display: block;
-    font-size: 1rem;
-    color: #888;
-    font-weight: 400;
-    margin-top: 8px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.6rem;
+    color: #666666c4;
+    font-weight: 700;
+    margin-top: 15px;
 }
+.icono-carrito {
+    width: 55px;    /* Ajustá tamaño según quieras */
+    height: auto;
+    margin-right: 10px;
+    vertical-align: middle; /* que quede alineado al texto */
+}
+
 
 /* CAMPO NOMBRE DEL CLIENTE */
 .nombre-cliente-container {
@@ -116,12 +126,14 @@ body.pantalla-carrito {
 
 /* TÍTULO "PRODUCTOS (X)" CON ÍCONO */
 .carrito-items::before {
-    content: '🛒 Productos (' attr(data-count) ')';
+    content: ' Productos: ';
     display: block;
     font-size: 1.6rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 900;
+    color: #FF6B4A;
+    margin-bottom: 5px;
+    
 }
 
 /* LISTA DE PRODUCTOS */
@@ -144,6 +156,10 @@ body.pantalla-carrito {
     display: flex;
     flex-direction: column;
     gap: 5px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .carrito-item:hover {
@@ -158,6 +174,8 @@ body.pantalla-carrito {
     gap: 20px;
     align-items: center;
     width: 100%;
+    
+    
 }
 
 /* ============================
@@ -178,19 +196,19 @@ body.pantalla-carrito {
     display: flex;
     flex-direction: column;
     justify-content: center; /* centra verticalmente junto a la imagen */
-    gap: 6px;
+    gap: 4px;
 }
 
 .carrito-info h3 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #333;
     line-height: 1.2;
 }
 
 .carrito-info .precio-item {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 900;
     color: #FF6B4A;
     margin: 0;
@@ -203,18 +221,20 @@ body.pantalla-carrito {
 .carrito-controles {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 8px;
     padding: 6px 12px;
-    border-radius: 50px;
+    border-radius: 20px;
     border: 2px solid rgba(255, 140, 66, 0.2);
     background: rgba(255, 235, 220, 0.4);
+    width: fit-content; /* evita que ocupe toda la tarjeta */
 }
 
 .carrito-controles .btn-cantidad {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    font-size: 1.3rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 1.2rem;
     font-weight: 700;
     background: linear-gradient(135deg, #FF8C42, #FF6B4A);
     color: #FFFFFF;
@@ -234,7 +254,7 @@ body.pantalla-carrito {
     font-size: 1.2rem;
     font-weight: 700;
     color: #333;
-    min-width: 26px;
+    min-width: 28px;
     text-align: center;
 }
 
@@ -243,7 +263,7 @@ body.pantalla-carrito {
    ============================ */
 .carrito-item-bottom {
     padding-top: 12px;
-    margin-top: 5px;
+    margin-top: 10px;
     border-top: 2px solid #FFE5D9;
     display: flex;
     justify-content: space-between;
@@ -252,7 +272,7 @@ body.pantalla-carrito {
 
 .carrito-item-bottom .label-subtotal {
     font-size: 1rem;
-    color: #666;
+    color: #666666;
 }
 
 .carrito-item-bottom .valor-subtotal {

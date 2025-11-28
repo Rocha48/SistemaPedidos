@@ -2,38 +2,88 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedido Confirmado</title>
-     <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/confirmacion.css">
 </head>
 <body class="pantalla-confirmacion">
 
-    <h1>¡Pedido confirmado!</h1>
-    <p>Tu pedido se ha registrado exitosamente</p>
+    <div class="confirmacion-contenedor">
+        
+        <div class="header-info">
+            <div class="icono-exito">
+                <img src="../img/correcto.png" alt="Éxito" class="img-exito">
+            </div>
 
-    <h2>CÓDIGO DE PEDIDO:</h2>
-    <p id="codigo-pedido">-</p>
+            
+            <div class="header-text">
+                <h1>¡Pedido confirmado!</h1>
+                <p>Tu pedido se ha registrado exitosamente</p>
+            </div>
+        </div>
 
-    <h3>Detalles del pedido</h3>
+        <div class="codigo-pedido-box">
+            <h2>CÓDIGO DE PEDIDO:</h2>
+            <p id="codigo-pedido">-</p>
+        </div>
 
-    <p><strong>Cliente:</strong> <span id="nombre-cliente-confirmacion">-</span></p>
-    <p><strong>Método de pago:</strong> <span id="pago-metodo">-</span></p>
-    <p><strong>Tipo de pedido:</strong> <span id="tipo-pedido-confirmacion">-</span></p>
-    <p><strong>Mesa:</strong> <span id="mesa-confirmacion">-</span></p>
+        <div class="contador-redireccion">
+            <p>Esta pantalla se redireccionará al inicio en <span id="contador">30</span> segundos...</p>
+        </div>
 
+        <div class="column-wrapper">
+        
+            <div class="columna-izquierda">
+                <div class="detalles-pedido">
+                    <h3>Detalles del pedido</h3>
+                    
+                    <div class="detalle-item">
+                        <span class="detalle-label">Cliente:</span>
+                        <span class="detalle-valor" id="nombre-cliente-confirmacion">-</span>
+                    </div>
 
+                    <div class="detalle-item">
+                        <span class="detalle-label">Método de pago:</span>
+                        <span class="detalle-valor" id="pago-metodo">-</span>
+                    </div>
 
-    <!-- OBSERVACIONES -->
-    <div id="observaciones-box" style="display:none;">
-        <p><strong>Observaciones:</strong></p>
-        <p id="observaciones-confirmacion"></p>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Tipo de pedido:</span>
+                        <span class="detalle-valor" id="tipo-pedido-confirmacion">-</span>
+                    </div>
+
+                    <div class="detalle-item" id="mesa-item" style="display: none;">
+                        <span class="detalle-label">Mesa:</span>
+                        <span class="detalle-valor" id="mesa-confirmacion">-</span>
+                    </div>
+
+                    <div class="detalle-item">
+                        <span class="detalle-label">Total pagado:</span>
+                        <span class="detalle-valor" id="total-pagado">$0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columna-derecha">
+                <div class="productos-lista">
+                    <strong>Productos:</strong>
+                    <ul id="productos-confirmacion"></ul>
+                </div>
+
+                <div id="observaciones-box" style="display:none;">
+                    <p><strong>Observaciones:</strong></p>
+                    <p id="observaciones-confirmacion"></p>
+                </div>
+
+                <div class="instruccion-ticket">
+                    <p>📋 Por favor, guarda tu ticket y muéstralo en el mostrador cuando tu pedido esté listo.</p>
+                </div>
+            </div>
+        </div>
+        
     </div>
 
-    <p>Por favor, dirigite al mostrador y mostrá tu código cuando tu pedido esté listo.</p>
-
-    <button onclick="volverInicio()">Volver al inicio</button>
-
-    <!-- Archivo JS -->
-    <script src="../js/script.js"></script>
+    <script src="../js/confirmacion.js"></script>
 
 </body>
 </html>

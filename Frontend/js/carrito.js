@@ -110,7 +110,7 @@ function guardarCarrito() {
 }
 
 // ====================
-// Confirmar pedido
+// Confirmar pedido - SIN ALERT, REDIRIGIR DIRECTO
 // ====================
 document.addEventListener("DOMContentLoaded", () => {
     cargarCarrito();
@@ -131,70 +131,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const observacionesGenerales = document.getElementById("observaciones-generales").value.trim();
-            const mesaSeleccionada = parseInt(localStorage.getItem("mesaSeleccionada")) || 10;
-            const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
-
-            console.log("🔍 Carrito antes de enviar:", carrito);
-
-            // ✅ JSON COMPLETO CON PAGOS
-            const pedido = {
-                NombreCliente: nombreCliente,
-                FechaHora: new Date().toISOString(),
-                Estado: "Pendiente",
-                Total: total,
-                NumeroMesa: mesaSeleccionada,
-                Pagos: [], // ⚠️ IMPORTANTE: Array vacío
-                Detalles: carrito.map(item => ({
-                    IdPlato: item.idPlato, // ⚠️ DEBE EXISTIR en el carrito
-                    Cantidad: item.cantidad,
-                    PrecioUnitario: item.precio,
-                    Subtotal: item.precio * item.cantidad,
-                    Observaciones: observacionesGenerales || ""
-                }))
-            };
-
-            console.log("📦 Enviando pedido:", JSON.stringify(pedido, null, 2));
-
-            // Deshabilitar botón
-            btnConfirmar.disabled = true;
-            btnConfirmar.textContent = "⏳ Procesando...";
-
-            try {
-                const res = await fetch(API_PEDIDOS_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(pedido)
-                });
-
-                const data = await res.json();
-                console.log("✅ Respuesta del servidor:", data);
-
-                if (!res.ok) {
-                    const errorMsg = data.title || data.message || JSON.stringify(data.errors || data);
-                    console.error("❌ Error del servidor:", errorMsg);
-                    throw new Error(errorMsg);
-                }
-
-                // Guardar info
-                localStorage.setItem("nombreCliente", nombreCliente);
-                localStorage.setItem("ultimoPedidoId", data.idPedido || data.IdPedido);
-
-                // Limpiar carrito
-                carrito = [];
-                localStorage.removeItem("carrito");
-
-                alert(`✅ ¡Pedido confirmado!\n\nPedido Nº ${data.idPedido || data.IdPedido || "N/A"}\nTotal: $${total.toFixed(2)}\n\n¡Gracias, ${nombreCliente}!`);
-                
-                window.location.href = "pago.html";
-
-            } catch (err) {
-                console.error("❌ Error al enviar el pedido:", err);
-                alert(`❌ Error al enviar el pedido:\n\n${err.message}\n\nRevisá la consola (F12) para más detalles.`);
-                
-                // Restaurar botón
-                btnConfirmar.disabled = false;
-                btnConfirmar.textContent = "✅ Confirmar pedido";
-            }
+            
+            // Guardar datos para la pantalla de pago
+            localStorage.setItem("nombreCliente", nombreCliente);
+            localStorage.setItem("observacionesGenerales", observacionesGenerales);
+            
+            // Redirigir SIN mostrar alert
+            window.location.href = "pago.html";
         });
     }
 
