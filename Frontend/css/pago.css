@@ -225,7 +225,7 @@ body.pantalla-pago {
 .modal-contenido h2 {
     font-size: 1.8rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #FF6B4A, #FF3366);
+    background: linear-gradient(90deg, #FF6B4A, #FF8C42, #FF6B4A);
     color: white;
     padding: 15px;
     border-radius: 10px;
@@ -234,6 +234,7 @@ body.pantalla-pago {
 
 .modal-texto {
     font-size: 1.05rem;
+    font-family: 'Open Sans', sans-serif;
     margin: 15px 0;
     color: #333;
     line-height: 1.5;
@@ -296,6 +297,7 @@ body.pantalla-pago {
 
 .resumen-pedido h3 {
     font-size: 1.3rem;
+    font-family: 'Georgia', 'Times New Roman', serif;
     color: #FF6B4A;
     margin: 0 0 15px 0;
 }
@@ -303,6 +305,7 @@ body.pantalla-pago {
 .resumen-pedido .total-final {
     font-size: 1.5rem;
     font-weight: 900;
+    font-family: 'Georgia', 'Times New Roman', serif;
     color: #FF3366;
     margin-top: 15px;
     padding-top: 15px;
@@ -356,15 +359,16 @@ body.pantalla-pago {
 }
 
 .instrucciones-box {
-    background: #E3F2FD;
+    background: #f3e7cc;
+    font-family: 'Open Sans', sans-serif;
     padding: 20px;
     border-radius: 12px;
     margin: 20px 0;
-    border-left: 4px solid #2196F3;
+    border-left: 4px solid #f39f21;
 }
 
 .instrucciones-box h4 {
-    color: #1976D2;
+    color: #d21919;
     margin: 0 0 12px 0;
     font-size: 1.1rem;
 }
@@ -385,13 +389,6 @@ body.pantalla-pago {
     color: #333;
 }
 
-.estado-pendiente {
-    background: #FFF3CD;
-    padding: 15px;
-    border-radius: 10px;
-    border-left: 4px solid #FFC107;
-    margin: 20px 0;
-}
 
 .estado-pendiente p {
     margin: 0;

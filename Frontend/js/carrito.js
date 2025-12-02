@@ -62,6 +62,8 @@ function cargarCarrito() {
     });
 
     totalPrecio.textContent = total.toFixed(2);
+    actualizarResumen();
+
     agregarEventListeners();
 }
 // ====================
@@ -114,11 +116,29 @@ function guardarCarrito() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
+
+// ====================
+// Actualizar cuadro de resumen (cantidad total)
+// ====================
+function actualizarResumen() {
+    const resumenCantidad = document.getElementById("resumen-cantidad");
+
+    if (!resumenCantidad) return;
+
+    // Suma todas las cantidades del carrito
+    let totalProductos = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
+    resumenCantidad.textContent = totalProductos;
+}
+
+
+
 // ====================
 // Confirmar pedido - SIN ALERT, REDIRIGIR DIRECTO
 // ====================
 document.addEventListener("DOMContentLoaded", () => {
     cargarCarrito();
+    actualizarResumen();
 
     const btnConfirmar = document.getElementById("btn-confirmar");
     if (btnConfirmar) {

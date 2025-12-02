@@ -1,4 +1,4 @@
-// platos.js (CORREGIDO)
+// platos.js (SOLUCIONADO - SIN LOGS)
 const API_URL = "http://localhost:5151/api/Platos";
 const API_CATEGORIAS = "http://localhost:5151/api/Categorias";
 
@@ -27,16 +27,23 @@ async function cargarCategorias() {
 
         const select = document.getElementById("plato-categoria");
         if (!select) return;
+        
+        // GUARDAR LA SELECCIÓN ACTUAL ANTES DE RECREAR
+        const valorActual = select.value;
+        
         select.innerHTML = "";
 
-        // OJO: backend actual espera el NOMBRE de la categoría en dto.Categoria.
-        // Si en el futuro cambias el backend para recibir idCategoria, cambia option.value = c.idCategoria.
         categorias.forEach(c => {
             const option = document.createElement("option");
-            option.value = c.nombre; // <- nombre porque tu DTO espera Categoria:string
+            option.value = c.nombre;
             option.textContent = c.nombre;
             select.appendChild(option);
         });
+
+        // RESTAURAR LA SELECCIÓN SI EXISTÍA
+        if (valorActual && Array.from(select.options).some(opt => opt.value === valorActual)) {
+            select.value = valorActual;
+        }
 
     } catch (error) {
         console.error("Error al cargar categorías:", error);
@@ -54,7 +61,6 @@ async function cargarPlatos() {
         });
 
         if (!response.ok) {
-            // si 401/403 dar aviso claro
             if (response.status === 401) {
                 alert("No autorizado. Iniciá sesión de nuevo.");
                 window.location.href = "../../admin-login.html";
@@ -96,9 +102,7 @@ async function cargarPlatos() {
 // GUARDAR (CREAR / EDITAR)
 // ------------------------------
 async function guardarPlato() {
-    // refresco categorías por las dudas (si alguien agregó una categoría en otra pestaña)
-    await cargarCategorias();
-
+    // LEER EL VALOR PRIMERO, ANTES DE RECARGAR CATEGORÍAS
     const nombre = document.getElementById("plato-nombre")?.value ?? "";
     const descripcion = document.getElementById("plato-descripcion")?.value ?? "";
     const precioVal = document.getElementById("plato-precio")?.value ?? "";
@@ -116,7 +120,7 @@ async function guardarPlato() {
         nombre,
         descripcion,
         precio,
-        categoria,    // backend espera nombre (dto.Categoria)
+        categoria,
         imagenURL,
         disponible
     };
@@ -135,7 +139,6 @@ async function guardarPlato() {
         });
 
         if (!response.ok) {
-            // Intento leer JSON con message o texto plano
             let msg = "";
             try {
                 const j = await response.json();
@@ -147,8 +150,6 @@ async function guardarPlato() {
             return;
         }
 
-        // OK
-        // si el endpoint devuelve JSON (ej {message, id}) lo podemos leer, si no no pasa nada
         try { await response.json(); } catch (e) { /* no JSON devuelto */ }
 
         alert("✔ Plato guardado correctamente");
@@ -166,9 +167,6 @@ async function guardarPlato() {
 // ------------------------------
 async function editarPlato(id) {
     try {
-        // recargo categorias antes por si cambió
-        await cargarCategorias();
-
         const response = await fetch(`${API_URL}/${id}`, {
             headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
         });
@@ -189,9 +187,10 @@ async function editarPlato(id) {
         document.getElementById("plato-img").value = plato.imagenURL ?? "";
         document.getElementById("plato-disponible").checked = !!plato.disponible;
 
-        // selecciono la categoría por texto (porque option.value = nombre)
+        // Seleccionar la categoría del plato
         const select = document.getElementById("plato-categoria");
-        if (select) {
+        if (select && plato.categoria) {
+            // Buscar la opción que coincida con la categoría
             for (let opt of select.options) {
                 if (opt.value === plato.categoria) {
                     select.value = opt.value;
@@ -199,7 +198,7 @@ async function editarPlato(id) {
                 }
             }
         }
-        // cambiar título del formulario si lo tenés visible
+
         const titulo = document.getElementById("titulo-form-plato");
         if (titulo) titulo.innerText = "Editar Plato";
 

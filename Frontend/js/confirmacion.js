@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function cargarDatosConfirmacion() {
     // CÓDIGO DE PEDIDO
     const idPedido = localStorage.getItem("ultimoPedidoId") || "N/A";
-    document.getElementById("codigo-pedido").textContent = idPedido;
+    document.getElementById("codigo-pedido").textContent = `#${idPedido}`;
+
 
     // NOMBRE DEL CLIENTE
     const nombreCliente = localStorage.getItem("nombreCliente") || "Cliente";
@@ -29,15 +30,20 @@ function cargarDatosConfirmacion() {
     document.getElementById("pago-metodo").textContent = metodoPago;
 
     // TIPO DE PEDIDO (Local o Para Llevar)
-    const tipoPedido = localStorage.getItem("tipoPedido") || "Para Llevar";
-    document.getElementById("tipo-pedido-confirmacion").textContent = tipoPedido;
+    const tipoPedidoRaw = localStorage.getItem("tipoPedido") || "Para Llevar";
+    const tipoPedidoEsLocal = tipoPedidoRaw.toLowerCase() === "local";
+
+    document.getElementById("tipo-pedido-confirmacion").textContent =
+        tipoPedidoEsLocal ? "Consumir en el local" : "Para Llevar";
+
 
     // MESA (solo si es "Local")
-    if (tipoPedido === "Local") {
-        const mesa = localStorage.getItem("mesaSeleccionada") || "10";
+    if (tipoPedidoEsLocal) {
+        const mesa = localStorage.getItem("mesaSeleccionada") || "0";
         document.getElementById("mesa-confirmacion").textContent = `Mesa ${mesa}`;
         document.getElementById("mesa-item").style.display = "flex";
     }
+
 
     // PRODUCTOS
     const carrito = JSON.parse(localStorage.getItem("carritoOriginal")) || [];
@@ -94,6 +100,9 @@ function volverInicio() {
     localStorage.removeItem("metodoPago");
     localStorage.removeItem("observacionesGenerales");
     localStorage.removeItem("carritoOriginal");
+    localStorage.removeItem("nombreCliente");
+    localStorage.removeItem("carrito");
+
     
     // Redirigir al menú
     window.location.href = "../index.html";

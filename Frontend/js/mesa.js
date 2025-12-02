@@ -110,7 +110,7 @@ function crearModalHTML() {
             <input type="number" id="form-numero" required>
 
             <label>Estado:</label>
-            <input type="text" id="form-estado" placeholder="Libre / Ocupada / Reservada">
+            <input type="text" id="form-estado" placeholder="Libre / Ocupada ">
 
             <label>Capacidad:</label>
             <input type="number" id="form-capacidad" min="1" placeholder="Opcional">

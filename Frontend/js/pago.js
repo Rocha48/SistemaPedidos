@@ -91,7 +91,6 @@ function cerrarModalQR() {
 
 function confirmarQR() {
     enviarPedidoBackend("QR");
-    window.location.href = "confirmacion.html";
 }
 
 // ====================
@@ -134,7 +133,8 @@ function mostrarResumenEnModal(metodo) {
 async function enviarPedidoBackend(metodoPago) {
     const nombreCliente = localStorage.getItem("nombreCliente") || "Cliente";
     const observacionesGenerales = localStorage.getItem("observacionesGenerales") || "";
-    const mesaSeleccionada = parseInt(localStorage.getItem("mesaSeleccionada")) || 10;
+    const mesaSeleccionadaRaw = localStorage.getItem("mesaSeleccionada");
+    const mesaSeleccionada = mesaSeleccionadaRaw ? parseInt(mesaSeleccionadaRaw) : 0;
     const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
 
     const pedido = {
@@ -143,13 +143,7 @@ async function enviarPedidoBackend(metodoPago) {
         Estado: "Pendiente",
         Total: total,
         NumeroMesa: mesaSeleccionada,
-        Pagos: [
-            {
-                MetodoPago: metodoPago,
-                Monto: total,
-                FechaPago: new Date().toISOString()
-            }
-        ],
+
         Detalles: carrito.map(item => ({
             IdPlato: item.idPlato,
             Cantidad: item.cantidad,
@@ -159,7 +153,7 @@ async function enviarPedidoBackend(metodoPago) {
         }))
     };
 
-    console.log(" Enviando pedido con método:", metodoPago, pedido);
+    console.log("📦 Enviando pedido:", JSON.stringify(pedido, null, 2));
 
     try {
         const res = await fetch(API_PEDIDOS_URL, {
@@ -167,28 +161,35 @@ async function enviarPedidoBackend(metodoPago) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(pedido)
         });
-
+        
         const data = await res.json();
+        console.log("🔍 RESPUESTA RAW DEL BACKEND:", data);
+
+       // await new Promise(res => setTimeout(res, 5000)); 5 segundos de espera para mostrar datos en la consola F12
 
         if (!res.ok) {
+            console.error("❌ Error del servidor:", data);
             throw new Error(data.title || data.message || "Error al procesar el pedido");
         }
 
         console.log(" Pedido confirmado:", data);
 
         // Guardar ID del pedido
-        localStorage.setItem("ultimoPedidoId", data.idPedido || data.IdPedido);
+        localStorage.setItem("ultimoPedidoId", data.id || "N/A");
         localStorage.setItem("metodoPago", metodoPago);
         localStorage.setItem("carritoOriginal", JSON.stringify(carrito));
 
+
         // Limpiar carrito
         localStorage.removeItem("carrito");
+        localStorage.removeItem("observacionesGenerales");
+      //  localStorage.removeItem("nombreCliente");
 
         // Redirigir a confirmación
         window.location.href = "confirmacion.html";
 
     } catch (err) {
         console.error(" Error:", err);
-        alert(` Error al procesar el pago:\n\n${err.message}`);
+        alert(`❌ Error al procesar el pago:\n\n${err.message}\n\nRevisa la consola (F12)`);
     }
 }

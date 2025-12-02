@@ -1,19 +1,11 @@
 ﻿function seleccionarTipo(tipo) {
-
-    // Guardar tipo de pedido
-    localStorage.setItem("tipoPedido", tipo);
-
-    // Reiniciar valores previos
-    localStorage.removeItem("mesa");
-    localStorage.removeItem("mesaSeleccionada");
-
+    // Guardar tipo de pedido con el nombre correcto
     if (tipo === "local") {
-        
+        localStorage.setItem("tipoPedido", "Local");
         window.location.href = "../totem/mesa.html";
-    } 
-    else {
-        // Si es para llevar, guardamos un valor estándar
-        localStorage.setItem("mesa", "No corresponde");
+    } else {
+        localStorage.setItem("tipoPedido", "Para Llevar");
+        localStorage.setItem("mesaSeleccionada", "0"); // No hay mesa
         window.location.href = "../totem/menu.html";
     }
 }
