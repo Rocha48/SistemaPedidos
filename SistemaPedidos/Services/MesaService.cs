@@ -13,7 +13,7 @@ namespace sistemapedidos.Business.Services
             _context = context;
         }
 
-        // Devuelve IdMesa, Numero, Estado, Capacidad y Activa
+        // Esto está bien: devolver objetos anónimos para mostrar en el tótem
         public async Task<List<object>> ObtenerTodasAsync()
         {
             return await _context.Mesas
@@ -22,25 +22,17 @@ namespace sistemapedidos.Business.Services
                     m.IdMesa,
                     m.Numero,
                     m.Estado,
-                    Capacidad = m.Capacidad,   // nullable included
+                    Capacidad = m.Capacidad,
                     Activa = m.Activa
                 })
                 .ToListAsync<object>();
         }
 
-        public async Task<object?> ObtenerPorIdAsync(int id)
+        // 🔥 CORREGIDO → ahora devuelve Mesa REAL, NO object
+        public async Task<Mesa?> ObtenerPorIdAsync(int id)
         {
             return await _context.Mesas
-                .Where(m => m.IdMesa == id)
-                .Select(m => new
-                {
-                    m.IdMesa,
-                    m.Numero,
-                    m.Estado,
-                    Capacidad = m.Capacidad,
-                    Activa = m.Activa
-                })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(m => m.IdMesa == id);
         }
 
         public async Task<Mesa> CrearAsync(Mesa mesa)

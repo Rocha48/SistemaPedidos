@@ -18,6 +18,9 @@ namespace sistemapedidos.Controllers
             _service = service;
         }
 
+        // =====================================================================
+        // GET TODAS LAS MESAS (ADMIN/MOZO)
+        // =====================================================================
         [HttpGet]
         [Authorize(Roles = "Administrador,Mozo")]
         public async Task<IActionResult> GetMesas()
@@ -26,7 +29,9 @@ namespace sistemapedidos.Controllers
             return Ok(mesas);
         }
 
-       
+        // =====================================================================
+        // GET MESAS PARA TÓTEM (PÚBLICO)
+        // =====================================================================
         [HttpGet("publicas")]
         [AllowAnonymous]
         public async Task<IActionResult> GetMesasPublicas()
@@ -35,7 +40,29 @@ namespace sistemapedidos.Controllers
             return Ok(mesas);
         }
 
+        // =====================================================================
+        // PUT — OCUPAR MESA (TÓTEM)
+        // =====================================================================
+        [HttpPut("publico/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> OcuparMesa(int id)
+        {
+            var mesa = await _service.ObtenerPorIdAsync(id);
+            if (mesa == null)
+                return NotFound(new { message = $"Mesa con ID {id} no encontrada." });
 
+            mesa.Estado = "ocupada"; // ya NO da error ✔
+
+            var actualizado = await _service.ActualizarAsync(id, mesa);
+            if (!actualizado)
+                return BadRequest(new { message = "No se pudo actualizar la mesa." });
+
+            return Ok(new { message = "Mesa marcada como ocupada." });
+        }
+
+        // =====================================================================
+        // GET POR ID
+        // =====================================================================
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrador,Mozo")]
         public async Task<IActionResult> GetMesa(int id)
@@ -46,6 +73,9 @@ namespace sistemapedidos.Controllers
             return Ok(mesa);
         }
 
+        // =====================================================================
+        // POST CREAR MESA
+        // =====================================================================
         [HttpPost]
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> PostMesa([FromBody] Mesa mesa)
@@ -61,6 +91,9 @@ namespace sistemapedidos.Controllers
             }
         }
 
+        // =====================================================================
+        // PUT EDITAR MESA
+        // =====================================================================
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> PutMesa(int id, Mesa mesa)
@@ -82,6 +115,9 @@ namespace sistemapedidos.Controllers
             }
         }
 
+        // =====================================================================
+        // DELETE ELIMINAR MESA
+        // =====================================================================
         [HttpDelete("{id}")]
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteMesa(int id)

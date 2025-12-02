@@ -52,18 +52,23 @@ namespace sistemapedidos.Services
 
         public async Task<Plato> CrearAsync(PlatoDTO dto)
         {
-            
             if (dto.Precio <= 0)
                 throw new ArgumentException("El precio debe ser mayor a 0.");
 
             if (string.IsNullOrWhiteSpace(dto.Nombre))
                 throw new ArgumentException("El nombre del plato es obligatorio.");
 
+            // CAMBIO CRÍTICO: Búsqueda case-insensitive y sin espacios extra
+            var categoriaNombre = dto.Categoria?.Trim() ?? "";
+
             var categoria = await _context.CategoriasPlato
-                .FirstOrDefaultAsync(c => c.Nombre == dto.Categoria);
+                .FirstOrDefaultAsync(c => c.Nombre.ToLower() == categoriaNombre.ToLower());
 
             if (categoria == null)
-                throw new InvalidOperationException("Categoría no encontrada.");
+            {
+                // LOG para debugging - ayuda a identificar qué categoría no se encontró
+                throw new InvalidOperationException($"Categoría '{dto.Categoria}' no encontrada. Verifica que exista en la base de datos.");
+            }
 
             var plato = new Plato
             {
@@ -91,11 +96,16 @@ namespace sistemapedidos.Services
             if (dto.Precio <= 0)
                 throw new ArgumentException("El precio debe ser mayor a 0.");
 
+            // CAMBIO CRÍTICO: Búsqueda case-insensitive y sin espacios extra
+            var categoriaNombre = dto.Categoria?.Trim() ?? "";
+
             var categoria = await _context.CategoriasPlato
-                .FirstOrDefaultAsync(c => c.Nombre == dto.Categoria);
+                .FirstOrDefaultAsync(c => c.Nombre.ToLower() == categoriaNombre.ToLower());
 
             if (categoria == null)
-                throw new InvalidOperationException("Categoría no encontrada.");
+            {
+                throw new InvalidOperationException($"Categoría '{dto.Categoria}' no encontrada. Verifica que exista en la base de datos.");
+            }
 
             plato.Nombre = dto.Nombre;
             plato.Descripcion = dto.Descripcion;
